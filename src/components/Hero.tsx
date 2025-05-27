@@ -1,11 +1,10 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Activity, Zap, Target } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="bg-gradient-to-br from-primary/5 to-secondary/10 py-16 px-4">
+    <section className="bg-primary/5 py-16 px-4">
       <div className="container mx-auto text-center">
         <div className="mb-8 flex justify-center">
           <div className="p-4 bg-white rounded-full shadow-lg">

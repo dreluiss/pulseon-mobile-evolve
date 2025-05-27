@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { CheckCircle, User, Target, Award, Calendar, MapPin, Dumbbell, AlertTriangle } from "lucide-react";
 import { OnboardingData } from "@/pages/Onboarding";
@@ -67,8 +66,8 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle className="text-green-600 dark:text-green-400" size={32} />
+        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckCircle className="text-primary" size={32} />
         </div>
         <h3 className="text-lg font-medium text-foreground mb-2">
           Perfeito! Vamos revisar suas informações
@@ -143,7 +142,7 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
         )}
       </div>
 
-      <div className="bg-gradient-to-r from-primary to-secondary p-6 rounded-2xl text-white text-center">
+      <div className="bg-primary p-6 rounded-2xl text-white text-center">
         <h3 className="font-poppins font-bold text-xl mb-2">
           Tudo pronto para começar!
         </h3>
@@ -163,7 +162,7 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
         </Button>
         <Button 
           onClick={handleStartTraining}
-          className="flex-1 bg-gradient-to-r from-primary to-secondary hover:opacity-90"
+          className="flex-1 bg-primary hover:opacity-90"
           size="lg"
         >
           Iniciar meu treino!

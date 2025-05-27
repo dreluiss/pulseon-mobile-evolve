@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -30,7 +29,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-muted to-accent p-4">
+    <div className="min-h-screen bg-background p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8 pt-4">
@@ -95,7 +94,7 @@ const Dashboard = () => {
 
         {/* Current Workout */}
         <Card className="shadow-xl border-0 bg-card mb-8">
-          <CardHeader className="bg-gradient-to-r from-primary to-secondary text-white rounded-t-lg">
+          <CardHeader className="bg-primary text-white rounded-t-lg">
             <CardTitle className="flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-poppins">{currentWorkout.name}</h2>
@@ -140,7 +139,7 @@ const Dashboard = () => {
               ))}
             </div>
 
-            <div className="mt-6 p-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl">
+            <div className="mt-6 p-4 bg-primary/10 rounded-xl">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm font-medium text-primary">Progresso Semanal</span>
                 <span className="text-sm text-primary">3/5 treinos</span>

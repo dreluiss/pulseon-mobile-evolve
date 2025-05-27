@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -91,7 +90,7 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-4">
+    <div className="min-h-screen bg-background p-4">
       <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
       </div>

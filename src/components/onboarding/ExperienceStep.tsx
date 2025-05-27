@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Star, Award, Trophy } from "lucide-react";
@@ -18,21 +17,21 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
       title: "Iniciante",
       description: "Pouca ou nenhuma experiência com exercícios",
       icon: Star,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     },
     {
       id: "intermediate",
       title: "Intermediário",
       description: "Já pratico exercícios regularmente há alguns meses",
       icon: Award,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     },
     {
       id: "advanced",
       title: "Avançado",
       description: "Tenho bastante experiência e conhecimento técnico",
       icon: Trophy,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     }
   ];
 
@@ -53,7 +52,7 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <Award className="text-primary" size={32} />
         </div>
         <h3 className="text-lg font-medium text-foreground mb-2">
@@ -75,7 +74,7 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
               onClick={() => handleLevelSelect(level.id)}
               className={`w-full p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg flex items-center gap-4 ${
                 isSelected 
-                  ? 'border-primary bg-slate-50 dark:bg-slate-800 shadow-lg scale-105' 
+                  ? 'border-primary bg-primary/5 shadow-lg scale-105' 
                   : 'border-border hover:border-primary/50'
               }`}
             >

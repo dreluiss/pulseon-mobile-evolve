@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Target, TrendingUp, Zap, Heart } from "lucide-react";
@@ -18,28 +17,28 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
       title: "Ganho de Massa",
       description: "Aumentar músculos e força",
       icon: TrendingUp,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     },
     {
       id: "weight_loss",
       title: "Emagrecimento",
       description: "Perder gordura e definir o corpo",
       icon: Target,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     },
     {
       id: "conditioning",
       title: "Condicionamento",
       description: "Melhorar resistência e disposição",
       icon: Zap,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     },
     {
       id: "health",
       title: "Saúde Geral",
       description: "Manter-se ativo e saudável",
       icon: Heart,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     }
   ];
 
@@ -60,7 +59,7 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <Target className="text-primary" size={32} />
         </div>
         <h3 className="text-lg font-medium text-foreground mb-2">
@@ -82,7 +81,7 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
               onClick={() => handleGoalSelect(goal.id)}
               className={`p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg ${
                 isSelected 
-                  ? 'border-primary bg-slate-50 dark:bg-slate-800 shadow-lg scale-105' 
+                  ? 'border-primary bg-primary/5 shadow-lg scale-105' 
                   : 'border-border hover:border-primary/50'
               }`}
             >

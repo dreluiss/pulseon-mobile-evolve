@@ -1,4 +1,3 @@
-
 import { Brain, Smartphone, TrendingUp } from "lucide-react";
 
 const SolutionSection = () => {
@@ -62,7 +61,7 @@ const SolutionSection = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-primary/5 to-secondary/10 p-8 rounded-2xl">
+          <div className="bg-primary/5 p-8 rounded-2xl">
             <div className="text-center">
               <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
                 <Brain className="text-primary animate-pulse-gentle" size={48} />

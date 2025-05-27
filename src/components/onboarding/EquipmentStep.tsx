@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Dumbbell, Circle } from "lucide-react";
 import { OnboardingData } from "@/pages/Onboarding";
@@ -51,7 +50,7 @@ const EquipmentStep = ({ data, updateData, onNext, onPrev }: EquipmentStepProps)
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <Dumbbell className="text-primary" size={32} />
         </div>
         <h3 className="text-lg font-medium text-foreground mb-2">
@@ -89,7 +88,7 @@ const EquipmentStep = ({ data, updateData, onNext, onPrev }: EquipmentStepProps)
         })}
       </div>
 
-      <div className="bg-slate-100 dark:bg-slate-800 p-4 rounded-xl">
+      <div className="bg-primary/10 p-4 rounded-xl">
         <p className="text-sm text-foreground">
           <strong>Dica:</strong> Não se preocupe se você não tem muitos equipamentos. 
           Criamos treinos eficazes com qualquer material disponível!

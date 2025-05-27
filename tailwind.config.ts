@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -26,12 +25,12 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: '#003c5e',
-					foreground: '#ffffff'
+					DEFAULT: '#004D55',
+					foreground: '#FFFFFF'
 				},
 				secondary: {
-					DEFAULT: '#a8f07a',
-					foreground: '#003c5e'
+					DEFAULT: '#C8FF00',
+					foreground: '#004D55'
 				},
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',

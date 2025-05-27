@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock } from "lucide-react";
@@ -50,7 +49,7 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <Calendar className="text-primary" size={32} />
         </div>
         <h3 className="text-lg font-medium text-foreground mb-2">
@@ -71,7 +70,7 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
               onClick={() => handleFrequencySelect(frequency.id)}
               className={`w-full p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg ${
                 isSelected 
-                  ? 'border-primary bg-slate-50 dark:bg-slate-800 shadow-lg scale-105' 
+                  ? 'border-primary bg-primary/5 shadow-lg scale-105' 
                   : 'border-border hover:border-primary/50'
               }`}
             >

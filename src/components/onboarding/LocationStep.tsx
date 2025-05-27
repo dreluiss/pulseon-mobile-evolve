@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { MapPin, Home, Building, Trees } from "lucide-react";
 import { OnboardingData } from "@/pages/Onboarding";
@@ -17,28 +16,28 @@ const LocationStep = ({ data, updateData, onNext, onPrev }: LocationStepProps) =
       title: "Academia Completa",
       description: "Acesso a todos os equipamentos e máquinas",
       icon: Building,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     },
     {
       id: "home",
       title: "Em Casa",
       description: "Treinos adaptados para o ambiente doméstico",
       icon: Home,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     },
     {
       id: "park",
       title: "Parque/Rua",
       description: "Exercícios funcionais ao ar livre",
       icon: Trees,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     },
     {
       id: "condo",
       title: "Academia do Condomínio",
       description: "Equipamentos básicos e limitados",
       icon: Building,
-      color: "bg-slate-100 dark:bg-slate-800 text-primary"
+      color: "bg-primary/10 text-primary"
     }
   ];
 
@@ -49,7 +48,7 @@ const LocationStep = ({ data, updateData, onNext, onPrev }: LocationStepProps) =
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <MapPin className="text-primary" size={32} />
         </div>
         <h3 className="text-lg font-medium text-foreground mb-2">
@@ -71,7 +70,7 @@ const LocationStep = ({ data, updateData, onNext, onPrev }: LocationStepProps) =
               onClick={() => handleLocationSelect(location.id)}
               className={`p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg ${
                 isSelected 
-                  ? 'border-primary bg-slate-50 dark:bg-slate-800 shadow-lg' 
+                  ? 'border-primary bg-primary/5 shadow-lg' 
                   : 'border-border hover:border-primary/50'
               }`}
             >
