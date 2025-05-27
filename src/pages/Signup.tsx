@@ -50,7 +50,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-muted to-accent flex items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-4">
       <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
       </div>
@@ -86,7 +86,7 @@ const Signup = () => {
                     placeholder="Seu nome completo"
                     value={formData.name}
                     onChange={handleChange}
-                    className="pl-10 bg-background text-foreground"
+                    className="pl-10 bg-background text-foreground border-border"
                     required
                   />
                 </div>
@@ -103,7 +103,7 @@ const Signup = () => {
                     placeholder="seu@email.com"
                     value={formData.email}
                     onChange={handleChange}
-                    className="pl-10 bg-background text-foreground"
+                    className="pl-10 bg-background text-foreground border-border"
                     required
                   />
                 </div>
@@ -120,7 +120,7 @@ const Signup = () => {
                     placeholder="Mínimo 6 caracteres"
                     value={formData.password}
                     onChange={handleChange}
-                    className="pl-10 pr-10 bg-background text-foreground"
+                    className="pl-10 pr-10 bg-background text-foreground border-border"
                     minLength={6}
                     required
                   />
@@ -145,7 +145,7 @@ const Signup = () => {
                     placeholder="Digite a senha novamente"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className="pl-10 pr-10 bg-background text-foreground"
+                    className="pl-10 pr-10 bg-background text-foreground border-border"
                     required
                   />
                   <button

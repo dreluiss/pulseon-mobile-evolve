@@ -18,28 +18,28 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
       title: "Ganho de Massa",
       description: "Aumentar músculos e força",
       icon: TrendingUp,
-      color: "bg-blue-100 text-blue-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     },
     {
       id: "weight_loss",
       title: "Emagrecimento",
       description: "Perder gordura e definir o corpo",
       icon: Target,
-      color: "bg-red-100 text-red-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     },
     {
       id: "conditioning",
       title: "Condicionamento",
       description: "Melhorar resistência e disposição",
       icon: Zap,
-      color: "bg-green-100 text-green-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     },
     {
       id: "health",
       title: "Saúde Geral",
       description: "Manter-se ativo e saudável",
       icon: Heart,
-      color: "bg-purple-100 text-purple-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     }
   ];
 
@@ -60,13 +60,13 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
           <Target className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-gray-800 mb-2">
+        <h3 className="text-lg font-medium text-foreground mb-2">
           Qual é o seu objetivo principal?
         </h3>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           Escolha o que mais te motiva a treinar
         </p>
       </div>
@@ -82,17 +82,17 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
               onClick={() => handleGoalSelect(goal.id)}
               className={`p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg ${
                 isSelected 
-                  ? 'border-primary bg-primary/5 shadow-lg scale-105' 
-                  : 'border-gray-200 hover:border-primary/50'
+                  ? 'border-primary bg-slate-50 dark:bg-slate-800 shadow-lg scale-105' 
+                  : 'border-border hover:border-primary/50'
               }`}
             >
               <div className={`w-12 h-12 ${goal.color} rounded-lg flex items-center justify-center mb-4`}>
                 <Icon size={24} />
               </div>
-              <h4 className="font-poppins font-bold text-lg mb-2 text-gray-800">
+              <h4 className="font-poppins font-bold text-lg mb-2 text-foreground">
                 {goal.title}
               </h4>
-              <p className="text-gray-600 text-sm">
+              <p className="text-muted-foreground text-sm">
                 {goal.description}
               </p>
             </button>

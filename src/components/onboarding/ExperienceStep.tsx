@@ -18,21 +18,21 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
       title: "Iniciante",
       description: "Pouca ou nenhuma experiência com exercícios",
       icon: Star,
-      color: "bg-green-100 text-green-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     },
     {
       id: "intermediate",
       title: "Intermediário",
       description: "Já pratico exercícios regularmente há alguns meses",
       icon: Award,
-      color: "bg-yellow-100 text-yellow-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     },
     {
       id: "advanced",
       title: "Avançado",
       description: "Tenho bastante experiência e conhecimento técnico",
       icon: Trophy,
-      color: "bg-red-100 text-red-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     }
   ];
 
@@ -53,13 +53,13 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
           <Award className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-gray-800 mb-2">
+        <h3 className="text-lg font-medium text-foreground mb-2">
           Qual seu nível de experiência?
         </h3>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           Isso nos ajuda a criar treinos adequados ao seu nível
         </p>
       </div>
@@ -75,18 +75,18 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
               onClick={() => handleLevelSelect(level.id)}
               className={`w-full p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg flex items-center gap-4 ${
                 isSelected 
-                  ? 'border-primary bg-primary/5 shadow-lg scale-105' 
-                  : 'border-gray-200 hover:border-primary/50'
+                  ? 'border-primary bg-slate-50 dark:bg-slate-800 shadow-lg scale-105' 
+                  : 'border-border hover:border-primary/50'
               }`}
             >
               <div className={`w-12 h-12 ${level.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
                 <Icon size={24} />
               </div>
               <div>
-                <h4 className="font-poppins font-bold text-lg mb-1 text-gray-800">
+                <h4 className="font-poppins font-bold text-lg mb-1 text-foreground">
                   {level.title}
                 </h4>
-                <p className="text-gray-600 text-sm">
+                <p className="text-muted-foreground text-sm">
                   {level.description}
                 </p>
               </div>

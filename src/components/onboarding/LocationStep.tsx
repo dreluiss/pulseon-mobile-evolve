@@ -17,28 +17,28 @@ const LocationStep = ({ data, updateData, onNext, onPrev }: LocationStepProps) =
       title: "Academia Completa",
       description: "Acesso a todos os equipamentos e máquinas",
       icon: Building,
-      color: "bg-blue-100 text-blue-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     },
     {
       id: "home",
       title: "Em Casa",
       description: "Treinos adaptados para o ambiente doméstico",
       icon: Home,
-      color: "bg-green-100 text-green-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     },
     {
       id: "park",
       title: "Parque/Rua",
       description: "Exercícios funcionais ao ar livre",
       icon: Trees,
-      color: "bg-emerald-100 text-emerald-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     },
     {
       id: "condo",
       title: "Academia do Condomínio",
       description: "Equipamentos básicos e limitados",
       icon: Building,
-      color: "bg-purple-100 text-purple-600"
+      color: "bg-slate-100 dark:bg-slate-800 text-primary"
     }
   ];
 
@@ -49,13 +49,13 @@ const LocationStep = ({ data, updateData, onNext, onPrev }: LocationStepProps) =
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
           <MapPin className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-gray-800 mb-2">
+        <h3 className="text-lg font-medium text-foreground mb-2">
           Onde você pretende treinar?
         </h3>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           Vamos adaptar os exercícios ao seu local de treino
         </p>
       </div>
@@ -71,17 +71,17 @@ const LocationStep = ({ data, updateData, onNext, onPrev }: LocationStepProps) =
               onClick={() => handleLocationSelect(location.id)}
               className={`p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg ${
                 isSelected 
-                  ? 'border-primary bg-primary/5 shadow-lg' 
-                  : 'border-gray-200 hover:border-primary/50'
+                  ? 'border-primary bg-slate-50 dark:bg-slate-800 shadow-lg' 
+                  : 'border-border hover:border-primary/50'
               }`}
             >
               <div className={`w-12 h-12 ${location.color} rounded-lg flex items-center justify-center mb-4`}>
                 <Icon size={24} />
               </div>
-              <h4 className="font-poppins font-bold text-lg mb-2 text-gray-800">
+              <h4 className="font-poppins font-bold text-lg mb-2 text-foreground">
                 {location.title}
               </h4>
-              <p className="text-gray-600 text-sm">
+              <p className="text-muted-foreground text-sm">
                 {location.description}
               </p>
             </button>

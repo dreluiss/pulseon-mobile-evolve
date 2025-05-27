@@ -38,13 +38,13 @@ const PersonalInfoStep = ({ data, updateData, onNext }: PersonalInfoStepProps) =
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
           <User className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-gray-800 mb-2">
+        <h3 className="text-lg font-medium text-foreground mb-2">
           Vamos nos conhecer melhor!
         </h3>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           Precisamos de algumas informações básicas para personalizar seu treino
         </p>
       </div>
@@ -53,7 +53,7 @@ const PersonalInfoStep = ({ data, updateData, onNext }: PersonalInfoStepProps) =
         <div className="space-y-2">
           <Label htmlFor="name">Nome completo</Label>
           <div className="relative">
-            <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+            <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
               id="name"
               placeholder="Como podemos te chamar?"
@@ -68,7 +68,7 @@ const PersonalInfoStep = ({ data, updateData, onNext }: PersonalInfoStepProps) =
         <div className="space-y-2">
           <Label htmlFor="age">Idade</Label>
           <div className="relative">
-            <Calendar className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+            <Calendar className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
               id="age"
               type="number"

@@ -67,78 +67,78 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle className="text-green-600" size={32} />
+        <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckCircle className="text-green-600 dark:text-green-400" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-gray-800 mb-2">
+        <h3 className="text-lg font-medium text-foreground mb-2">
           Perfeito! Vamos revisar suas informações
         </h3>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           Confirme se está tudo correto antes de criarmos seu treino personalizado
         </p>
       </div>
 
       <div className="space-y-4">
-        <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <div className="bg-card border border-border rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <User className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-gray-800">Informações Pessoais</h4>
+            <h4 className="font-poppins font-bold text-foreground">Informações Pessoais</h4>
           </div>
-          <div className="text-sm text-gray-600 space-y-1">
+          <div className="text-sm text-muted-foreground space-y-1">
             <p><strong>Nome:</strong> {data.name}</p>
             <p><strong>Idade:</strong> {data.age} anos</p>
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <div className="bg-card border border-border rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <Target className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-gray-800">Objetivo</h4>
+            <h4 className="font-poppins font-bold text-foreground">Objetivo</h4>
           </div>
-          <p className="text-sm text-gray-600">{getGoalLabel(data.goal)}</p>
+          <p className="text-sm text-muted-foreground">{getGoalLabel(data.goal)}</p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <div className="bg-card border border-border rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <Award className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-gray-800">Experiência</h4>
+            <h4 className="font-poppins font-bold text-foreground">Experiência</h4>
           </div>
-          <p className="text-sm text-gray-600">{getExperienceLabel(data.experience)}</p>
+          <p className="text-sm text-muted-foreground">{getExperienceLabel(data.experience)}</p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <div className="bg-card border border-border rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <Calendar className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-gray-800">Frequência</h4>
+            <h4 className="font-poppins font-bold text-foreground">Frequência</h4>
           </div>
-          <p className="text-sm text-gray-600">{data.frequency} vezes por semana</p>
+          <p className="text-sm text-muted-foreground">{data.frequency} vezes por semana</p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <div className="bg-card border border-border rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <MapPin className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-gray-800">Local de Treino</h4>
+            <h4 className="font-poppins font-bold text-foreground">Local de Treino</h4>
           </div>
-          <p className="text-sm text-gray-600">{getLocationLabel(data.location)}</p>
+          <p className="text-sm text-muted-foreground">{getLocationLabel(data.location)}</p>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-xl p-4">
+        <div className="bg-card border border-border rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <Dumbbell className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-gray-800">Equipamentos</h4>
+            <h4 className="font-poppins font-bold text-foreground">Equipamentos</h4>
           </div>
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-muted-foreground">
             {getEquipmentLabels(data.equipment).join(", ")}
           </div>
         </div>
 
         {data.restrictions && (
-          <div className="bg-white border border-gray-200 rounded-xl p-4">
+          <div className="bg-card border border-border rounded-xl p-4">
             <div className="flex items-center gap-3 mb-3">
               <AlertTriangle className="text-primary" size={20} />
-              <h4 className="font-poppins font-bold text-gray-800">Restrições</h4>
+              <h4 className="font-poppins font-bold text-foreground">Restrições</h4>
             </div>
-            <p className="text-sm text-gray-600">{data.restrictions}</p>
+            <p className="text-sm text-muted-foreground">{data.restrictions}</p>
           </div>
         )}
       </div>

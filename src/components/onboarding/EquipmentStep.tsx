@@ -51,13 +51,13 @@ const EquipmentStep = ({ data, updateData, onNext, onPrev }: EquipmentStepProps)
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
           <Dumbbell className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-gray-800 mb-2">
+        <h3 className="text-lg font-medium text-foreground mb-2">
           Quais equipamentos você tem disponível?
         </h3>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           Selecione todos que se aplicam (pode escolher mais de um)
         </p>
       </div>
@@ -72,16 +72,16 @@ const EquipmentStep = ({ data, updateData, onNext, onPrev }: EquipmentStepProps)
               onClick={() => handleEquipmentToggle(equipment.id)}
               className={`p-4 rounded-xl border-2 transition-all text-left hover:shadow-md flex items-center gap-3 ${
                 selected 
-                  ? 'border-primary bg-primary/5 shadow-md' 
-                  : 'border-gray-200 hover:border-primary/50'
+                  ? 'border-primary bg-slate-50 dark:bg-slate-800 shadow-md' 
+                  : 'border-border hover:border-primary/50'
               }`}
             >
               <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                selected ? 'border-primary bg-primary' : 'border-gray-300'
+                selected ? 'border-primary bg-primary' : 'border-muted-foreground'
               }`}>
                 {selected && <Circle className="text-white" size={12} fill="currentColor" />}
               </div>
-              <span className="font-medium text-gray-800">
+              <span className="font-medium text-foreground">
                 {equipment.label}
               </span>
             </button>
@@ -89,8 +89,8 @@ const EquipmentStep = ({ data, updateData, onNext, onPrev }: EquipmentStepProps)
         })}
       </div>
 
-      <div className="bg-blue-50 p-4 rounded-xl">
-        <p className="text-sm text-blue-800">
+      <div className="bg-slate-100 dark:bg-slate-800 p-4 rounded-xl">
+        <p className="text-sm text-foreground">
           <strong>Dica:</strong> Não se preocupe se você não tem muitos equipamentos. 
           Criamos treinos eficazes com qualquer material disponível!
         </p>

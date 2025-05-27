@@ -36,7 +36,7 @@ const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="w-9 h-9 text-foreground hover:bg-accent"
+      className="w-9 h-9 text-foreground hover:bg-accent border border-border"
       title={isDark ? "Modo claro" : "Modo escuro"}
     >
       {isDark ? (

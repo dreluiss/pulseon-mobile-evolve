@@ -91,7 +91,7 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-4">
       <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
       </div>

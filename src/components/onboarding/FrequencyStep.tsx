@@ -50,13 +50,13 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
           <Calendar className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-gray-800 mb-2">
+        <h3 className="text-lg font-medium text-foreground mb-2">
           Quantas vezes por semana você quer treinar?
         </h3>
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           Escolha uma frequência que se encaixe na sua rotina
         </p>
       </div>
@@ -71,20 +71,20 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
               onClick={() => handleFrequencySelect(frequency.id)}
               className={`w-full p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg ${
                 isSelected 
-                  ? 'border-primary bg-primary/5 shadow-lg scale-105' 
-                  : 'border-gray-200 hover:border-primary/50'
+                  ? 'border-primary bg-slate-50 dark:bg-slate-800 shadow-lg scale-105' 
+                  : 'border-border hover:border-primary/50'
               }`}
             >
               <div className="flex justify-between items-start mb-3">
-                <h4 className="font-poppins font-bold text-lg text-gray-800">
+                <h4 className="font-poppins font-bold text-lg text-foreground">
                   {frequency.title}
                 </h4>
-                <div className="flex items-center text-gray-500 text-sm">
+                <div className="flex items-center text-muted-foreground text-sm">
                   <Clock size={16} className="mr-1" />
                   {frequency.duration}
                 </div>
               </div>
-              <p className="text-gray-600 text-sm">
+              <p className="text-muted-foreground text-sm">
                 {frequency.description}
               </p>
             </button>
