@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Logo from "@/components/Logo";
+import ThemeToggle from "@/components/ThemeToggle";
 import { Play, Clock, Target, Award, Calendar, Settings, User } from "lucide-react";
 
 const Dashboard = () => {
@@ -29,17 +30,18 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-accent to-muted p-4">
+    <div className="min-h-screen bg-gradient-to-br from-muted to-accent p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8 pt-4">
           <Logo size="md" />
           <div className="flex gap-3">
-            <Button variant="outline" size="sm">
+            <ThemeToggle />
+            <Button variant="outline" size="sm" className="text-foreground border-border hover:bg-accent">
               <Settings size={16} className="mr-2" />
               Configurações
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="text-foreground border-border hover:bg-accent">
               <User size={16} className="mr-2" />
               Perfil
             </Button>
@@ -51,48 +53,48 @@ const Dashboard = () => {
           <h1 className="text-3xl font-poppins font-bold text-primary mb-2">
             Bem-vindo de volta!
           </h1>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             Seu treino personalizado está pronto. Vamos continuar sua jornada!
           </p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <Card>
+          <Card className="bg-card border-border">
             <CardContent className="p-4 text-center">
               <Target className="text-primary mx-auto mb-2" size={24} />
               <p className="text-2xl font-bold text-primary">{userStats.workoutsCompleted}</p>
-              <p className="text-sm text-gray-600">Treinos</p>
+              <p className="text-sm text-muted-foreground">Treinos</p>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="bg-card border-border">
             <CardContent className="p-4 text-center">
               <Award className="text-secondary mx-auto mb-2" size={24} />
               <p className="text-2xl font-bold text-primary">{userStats.currentStreak}</p>
-              <p className="text-sm text-gray-600">Sequência</p>
+              <p className="text-sm text-muted-foreground">Sequência</p>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="bg-card border-border">
             <CardContent className="p-4 text-center">
               <Clock className="text-primary mx-auto mb-2" size={24} />
               <p className="text-2xl font-bold text-primary">{userStats.totalHours}h</p>
-              <p className="text-sm text-gray-600">Total</p>
+              <p className="text-sm text-muted-foreground">Total</p>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="bg-card border-border">
             <CardContent className="p-4 text-center">
               <Calendar className="text-secondary mx-auto mb-2" size={24} />
               <p className="text-xs font-medium text-primary">{userStats.nextGoal}</p>
-              <p className="text-sm text-gray-600">Próxima meta</p>
+              <p className="text-sm text-muted-foreground">Próxima meta</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Current Workout */}
-        <Card className="shadow-xl border-0 mb-8">
+        <Card className="shadow-xl border-0 bg-card mb-8">
           <CardHeader className="bg-gradient-to-r from-primary to-secondary text-white rounded-t-lg">
             <CardTitle className="flex items-center justify-between">
               <div>
@@ -107,14 +109,14 @@ const Dashboard = () => {
               <div className="flex gap-6 text-sm">
                 <div className="flex items-center gap-2">
                   <Clock size={16} className="text-primary" />
-                  <span>{currentWorkout.duration}</span>
+                  <span className="text-foreground">{currentWorkout.duration}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Target size={16} className="text-primary" />
-                  <span>{currentWorkout.difficulty}</span>
+                  <span className="text-foreground">{currentWorkout.difficulty}</span>
                 </div>
               </div>
-              <Button className="bg-secondary text-primary hover:bg-secondary/90">
+              <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
                 <Play size={16} className="mr-2" />
                 Iniciar Treino
               </Button>
@@ -129,7 +131,7 @@ const Dashboard = () => {
                 <div key={index} className="flex justify-between items-center p-4 bg-accent rounded-xl">
                   <div>
                     <p className="font-medium text-primary">{exercise.name}</p>
-                    <p className="text-sm text-gray-600">{exercise.sets}</p>
+                    <p className="text-sm text-muted-foreground">{exercise.sets}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium text-primary">{exercise.weight}</p>
@@ -150,19 +152,19 @@ const Dashboard = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer bg-card border-border">
             <CardContent className="p-6 text-center">
               <Calendar className="text-primary mx-auto mb-3" size={32} />
-              <h3 className="font-poppins font-bold text-lg mb-2">Histórico</h3>
-              <p className="text-gray-600 text-sm">Veja seus treinos anteriores</p>
+              <h3 className="font-poppins font-bold text-lg mb-2 text-foreground">Histórico</h3>
+              <p className="text-muted-foreground text-sm">Veja seus treinos anteriores</p>
             </CardContent>
           </Card>
           
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer bg-card border-border">
             <CardContent className="p-6 text-center">
               <Settings className="text-primary mx-auto mb-3" size={32} />
-              <h3 className="font-poppins font-bold text-lg mb-2">Configurar</h3>
-              <p className="text-gray-600 text-sm">Ajuste seus objetivos</p>
+              <h3 className="font-poppins font-bold text-lg mb-2 text-foreground">Configurar</h3>
+              <p className="text-muted-foreground text-sm">Ajuste seus objetivos</p>
             </CardContent>
           </Card>
         </div>

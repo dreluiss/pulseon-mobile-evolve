@@ -34,12 +34,12 @@ export default {
 					foreground: '#003c5e'
 				},
 				accent: {
-					DEFAULT: '#f8f9fb',
-					foreground: '#003c5e'
+					DEFAULT: 'hsl(var(--accent))',
+					foreground: 'hsl(var(--accent-foreground))'
 				},
 				muted: {
-					DEFAULT: '#f1f3f5',
-					foreground: '#6c757d'
+					DEFAULT: 'hsl(var(--muted))',
+					foreground: 'hsl(var(--muted-foreground))'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',

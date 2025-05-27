@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Logo from "@/components/Logo";
+import ThemeToggle from "@/components/ThemeToggle";
 import PersonalInfoStep from "@/components/onboarding/PersonalInfoStep";
 import GoalStep from "@/components/onboarding/GoalStep";
 import ExperienceStep from "@/components/onboarding/ExperienceStep";
@@ -91,31 +92,35 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/10 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-muted to-accent p-4">
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
+      
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8 pt-8">
           <Logo size="lg" className="justify-center mb-4" />
           <h1 className="text-2xl font-poppins font-bold text-primary mb-2">
             Vamos personalizar seu treino!
           </h1>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             Responda algumas perguntas para criarmos o treino perfeito para você
           </p>
         </div>
 
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-gray-600">
+            <span className="text-sm font-medium text-foreground">
               Passo {currentStep + 1} de {totalSteps}
             </span>
-            <span className="text-sm font-medium text-gray-600">
+            <span className="text-sm font-medium text-foreground">
               {Math.round(progress)}%
             </span>
           </div>
           <Progress value={progress} className="h-2" />
         </div>
 
-        <Card className="shadow-xl border-0 min-h-[500px]">
+        <Card className="shadow-xl border-0 bg-card min-h-[500px]">
           <CardHeader>
             <CardTitle className="text-xl font-poppins text-center text-primary">
               {stepTitles[currentStep]}
