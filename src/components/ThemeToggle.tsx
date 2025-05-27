@@ -36,12 +36,13 @@ const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="w-9 h-9"
+      className="w-9 h-9 text-foreground hover:bg-accent"
+      title={isDark ? "Modo claro" : "Modo escuro"}
     >
       {isDark ? (
-        <Sun className="h-4 w-4 text-secondary" />
+        <Sun className="h-4 w-4" />
       ) : (
-        <Moon className="h-4 w-4 text-primary" />
+        <Moon className="h-4 w-4" />
       )}
       <span className="sr-only">Alternar tema</span>
     </Button>

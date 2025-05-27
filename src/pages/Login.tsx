@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -22,9 +23,10 @@ const Login = () => {
     // Aqui será integrado com Supabase Auth
     console.log("Login attempt:", { email, password });
     
-    // Simular loading
+    // Simular loading e redirecionar para dashboard
     setTimeout(() => {
       setIsLoading(false);
+      navigate("/dashboard");
     }, 1000);
   };
 
@@ -64,7 +66,7 @@ const Login = () => {
                     placeholder="seu@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-background text-foreground"
+                    className="pl-10 bg-background text-foreground border-border"
                     required
                   />
                 </div>
@@ -80,7 +82,7 @@ const Login = () => {
                     placeholder="Sua senha"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-10 bg-background text-foreground"
+                    className="pl-10 pr-10 bg-background text-foreground border-border"
                     required
                   />
                   <button
