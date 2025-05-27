@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { CheckCircle, User, Target, Award, Calendar, MapPin, Dumbbell, AlertTriangle } from "lucide-react";
 import { OnboardingData } from "@/pages/Onboarding";
+import { useNavigate } from "react-router-dom";
 
 interface SummaryStepProps {
   data: OnboardingData;
@@ -9,6 +10,8 @@ interface SummaryStepProps {
 }
 
 const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
+  const navigate = useNavigate();
+
   const getGoalLabel = (goal: string) => {
     const goals = {
       mass: "Ganho de Massa",
@@ -56,9 +59,9 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
   };
 
   const handleStartTraining = () => {
-    // Aqui você implementaria a lógica para gerar o primeiro treino
+    // Aqui você implementaria a lógica para salvar dados no Supabase
     console.log("Dados completos do onboarding:", data);
-    alert("Parabéns! Seu perfil foi criado com sucesso. Em breve você será redirecionado para seu primeiro treino personalizado!");
+    navigate("/dashboard");
   };
 
   return (

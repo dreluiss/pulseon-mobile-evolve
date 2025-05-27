@@ -1,4 +1,5 @@
 
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Target, TrendingUp, Zap, Heart } from "lucide-react";
 import { OnboardingData } from "@/pages/Onboarding";
@@ -46,6 +47,16 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
     updateData("goal", goalId);
   };
 
+  // Avança automaticamente após seleção
+  useEffect(() => {
+    if (data.goal) {
+      const timer = setTimeout(() => {
+        onNext();
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [data.goal, onNext]);
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
@@ -71,7 +82,7 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
               onClick={() => handleGoalSelect(goal.id)}
               className={`p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg ${
                 isSelected 
-                  ? 'border-primary bg-primary/5 shadow-lg' 
+                  ? 'border-primary bg-primary/5 shadow-lg scale-105' 
                   : 'border-gray-200 hover:border-primary/50'
               }`}
             >
@@ -97,14 +108,6 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
           size="lg"
         >
           Voltar
-        </Button>
-        <Button 
-          onClick={onNext}
-          className="flex-1 bg-primary hover:bg-primary/90"
-          size="lg"
-          disabled={!data.goal}
-        >
-          Continuar
         </Button>
       </div>
     </div>

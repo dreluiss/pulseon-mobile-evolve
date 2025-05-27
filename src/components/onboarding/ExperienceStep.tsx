@@ -1,4 +1,5 @@
 
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Star, Award, Trophy } from "lucide-react";
 import { OnboardingData } from "@/pages/Onboarding";
@@ -39,6 +40,16 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
     updateData("experience", levelId);
   };
 
+  // Avança automaticamente após seleção
+  useEffect(() => {
+    if (data.experience) {
+      const timer = setTimeout(() => {
+        onNext();
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [data.experience, onNext]);
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
@@ -64,7 +75,7 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
               onClick={() => handleLevelSelect(level.id)}
               className={`w-full p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg flex items-center gap-4 ${
                 isSelected 
-                  ? 'border-primary bg-primary/5 shadow-lg' 
+                  ? 'border-primary bg-primary/5 shadow-lg scale-105' 
                   : 'border-gray-200 hover:border-primary/50'
               }`}
             >
@@ -92,14 +103,6 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
           size="lg"
         >
           Voltar
-        </Button>
-        <Button 
-          onClick={onNext}
-          className="flex-1 bg-primary hover:bg-primary/90"
-          size="lg"
-          disabled={!data.experience}
-        >
-          Continuar
         </Button>
       </div>
     </div>

@@ -1,4 +1,5 @@
 
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock } from "lucide-react";
 import { OnboardingData } from "@/pages/Onboarding";
@@ -36,6 +37,16 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
     updateData("frequency", frequencyId);
   };
 
+  // Avança automaticamente após seleção
+  useEffect(() => {
+    if (data.frequency) {
+      const timer = setTimeout(() => {
+        onNext();
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [data.frequency, onNext]);
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
@@ -60,7 +71,7 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
               onClick={() => handleFrequencySelect(frequency.id)}
               className={`w-full p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg ${
                 isSelected 
-                  ? 'border-primary bg-primary/5 shadow-lg' 
+                  ? 'border-primary bg-primary/5 shadow-lg scale-105' 
                   : 'border-gray-200 hover:border-primary/50'
               }`}
             >
@@ -89,14 +100,6 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
           size="lg"
         >
           Voltar
-        </Button>
-        <Button 
-          onClick={onNext}
-          className="flex-1 bg-primary hover:bg-primary/90"
-          size="lg"
-          disabled={!data.frequency}
-        >
-          Continuar
         </Button>
       </div>
     </div>
