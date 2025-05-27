@@ -97,14 +97,6 @@ const LocationStep = ({ data, updateData, onNext, onPrev }: LocationStepProps) =
         >
           Voltar
         </Button>
-        <Button 
-          onClick={onNext}
-          className="flex-1 bg-primary hover:bg-primary/90"
-          size="lg"
-          disabled={!data.location}
-        >
-          Continuar
-        </Button>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import { Activity } from "lucide-react";
 
 interface LogoProps {
@@ -25,12 +24,17 @@ const Logo = ({ size = "md", showIcon = true, className = "" }: LogoProps) => {
       {showIcon && (
         <Activity 
           size={iconSizes[size]} 
-          className="text-primary animate-pulse-gentle" 
+          className="text-black dark:text-white"
         />
       )}
       <span className={`font-poppins font-bold ${sizeClasses[size]}`}>
         <span className="text-primary">Pulse</span>
-        <span className="text-secondary">On</span>
+        <span
+          className="logo-on"
+          style={{ color: '#B1126A' }}
+        >
+          On
+        </span>
       </span>
     </div>
   );

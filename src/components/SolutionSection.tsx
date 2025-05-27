@@ -2,13 +2,13 @@ import { Brain, Smartphone, TrendingUp } from "lucide-react";
 
 const SolutionSection = () => {
   return (
-    <section className="py-16 px-4 bg-white">
+    <section className="py-16 px-4 bg-white dark:bg-black">
       <div className="container mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-poppins font-bold text-primary mb-4">
+          <h2 className="text-3xl md:text-4xl font-poppins font-bold text-primary mb-4 dark:text-[#EAE6DA]">
             Nossa Solução Inteligente
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto dark:text-[#EAE6DA]">
             Transformamos anos de conhecimento em treinos personalizados com inteligência artificial
           </p>
         </div>
@@ -20,10 +20,10 @@ const SolutionSection = () => {
                 <Brain className="text-primary" size={24} />
               </div>
               <div>
-                <h3 className="font-poppins font-bold text-xl mb-2 text-gray-800">
+                <h3 className="font-poppins font-bold text-xl mb-2 text-gray-800 dark:text-[#EAE6DA]">
                   IA Personalizada
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Nossa inteligência artificial analisa seu perfil, objetivos e disponibilidade 
                   para criar treinos únicos e eficazes.
                 </p>
@@ -35,10 +35,10 @@ const SolutionSection = () => {
                 <Smartphone className="text-secondary" size={24} />
               </div>
               <div>
-                <h3 className="font-poppins font-bold text-xl mb-2 text-gray-800">
+                <h3 className="font-poppins font-bold text-xl mb-2 text-gray-800 dark:text-[#EAE6DA]">
                   Acesso Ilimitado
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Seus treinos sempre disponíveis no celular. Treine em casa, academia, 
                   parque ou onde quiser.
                 </p>
@@ -50,10 +50,10 @@ const SolutionSection = () => {
                 <TrendingUp className="text-primary" size={24} />
               </div>
               <div>
-                <h3 className="font-poppins font-bold text-xl mb-2 text-gray-800">
+                <h3 className="font-poppins font-bold text-xl mb-2 text-gray-800 dark:text-[#EAE6DA]">
                   Evolução Contínua
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   A IA adapta seus treinos conforme sua evolução, garantindo 
                   progressão constante e resultados duradouros.
                 </p>

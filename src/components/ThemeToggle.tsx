@@ -1,6 +1,4 @@
-
 import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 
 const ThemeToggle = () => {
@@ -9,7 +7,6 @@ const ThemeToggle = () => {
   useEffect(() => {
     const isDarkMode = localStorage.getItem("theme") === "dark" || 
       (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    
     setIsDark(isDarkMode);
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
@@ -21,7 +18,6 @@ const ThemeToggle = () => {
   const toggleTheme = () => {
     const newTheme = !isDark;
     setIsDark(newTheme);
-    
     if (newTheme) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
@@ -32,20 +28,18 @@ const ThemeToggle = () => {
   };
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
+    <button
       onClick={toggleTheme}
-      className="w-9 h-9 text-foreground hover:bg-accent border border-border"
-      title={isDark ? "Modo claro" : "Modo escuro"}
+      aria-label={isDark ? "Ativar tema claro" : "Ativar tema escuro"}
+      className="w-9 h-9 flex items-center justify-center bg-transparent border-none shadow-none p-0 focus:outline-none focus:ring-0"
+      style={{ background: "none" }}
     >
       {isDark ? (
-        <Sun className="h-4 w-4" />
+        <Sun className="h-6 w-6 text-white" />
       ) : (
-        <Moon className="h-4 w-4" />
+        <Moon className="h-6 w-6 text-black" />
       )}
-      <span className="sr-only">Alternar tema</span>
-    </Button>
+    </button>
   );
 };
 

@@ -5,6 +5,9 @@ import { Progress } from "@/components/ui/progress";
 import Logo from "@/components/Logo";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Play, Clock, Target, Award, Calendar, Settings, User } from "lucide-react";
+import Header from "@/components/Header";
+
+const iconButtonClass = "bg-transparent p-2 rounded-full transition text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10";
 
 const Dashboard = () => {
   const [currentWorkout] = useState({
@@ -30,23 +33,21 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background p-4">
+      <Header
+        actions={
+          <>
+            <Button className={iconButtonClass} size="icon" variant="ghost" aria-label="Ajustes">
+              <Settings size={20} />
+              <span className="sr-only">Ajustes</span>
+            </Button>
+            <Button className={iconButtonClass} size="icon" variant="ghost" aria-label="Perfil">
+              <User size={20} />
+              <span className="sr-only">Perfil</span>
+            </Button>
+          </>
+        }
+      />
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8 pt-4">
-          <Logo size="md" />
-          <div className="flex gap-3">
-            <ThemeToggle />
-            <Button variant="outline" size="sm" className="text-foreground border-border hover:bg-accent">
-              <Settings size={16} className="mr-2" />
-              Configurações
-            </Button>
-            <Button variant="outline" size="sm" className="text-foreground border-border hover:bg-accent">
-              <User size={16} className="mr-2" />
-              Perfil
-            </Button>
-          </div>
-        </div>
-
         {/* Welcome Section */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-poppins font-bold text-primary mb-2">
@@ -58,36 +59,33 @@ const Dashboard = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <Card className="bg-card border-border">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <Card className="bg-card border-border shadow-md shadow-gray-300 dark:shadow-none">
             <CardContent className="p-4 text-center">
-              <Target className="text-primary mx-auto mb-2" size={24} />
+              <Target className="text-primary dark:text-primary mx-auto mb-2" size={24} />
               <p className="text-2xl font-bold text-primary">{userStats.workoutsCompleted}</p>
-              <p className="text-sm text-muted-foreground">Treinos</p>
+              <p className="text-sm text-muted-primary">Treinos</p>
             </CardContent>
           </Card>
-          
-          <Card className="bg-card border-border">
+          <Card className="bg-card border-border shadow-md shadow-gray-300 dark:shadow-none">
             <CardContent className="p-4 text-center">
-              <Award className="text-secondary mx-auto mb-2" size={24} />
+              <Award className="text-foreground dark:text-secondary mx-auto mb-2" size={24} />
               <p className="text-2xl font-bold text-primary">{userStats.currentStreak}</p>
-              <p className="text-sm text-muted-foreground">Sequência</p>
+              <p className="text-sm text-muted-primary">Sequência</p>
             </CardContent>
           </Card>
-          
-          <Card className="bg-card border-border">
+          <Card className="bg-card border-border shadow-md shadow-gray-300 dark:shadow-none">
             <CardContent className="p-4 text-center">
-              <Clock className="text-primary mx-auto mb-2" size={24} />
+              <Clock className="text-primary dark:text-primary mx-auto mb-2" size={24} />
               <p className="text-2xl font-bold text-primary">{userStats.totalHours}h</p>
-              <p className="text-sm text-muted-foreground">Total</p>
+              <p className="text-sm text-muted-primary">Total</p>
             </CardContent>
           </Card>
-          
-          <Card className="bg-card border-border">
+          <Card className="bg-card border-border shadow-md shadow-gray-300 dark:shadow-none">
             <CardContent className="p-4 text-center">
-              <Calendar className="text-secondary mx-auto mb-2" size={24} />
+              <Calendar className="text-foreground dark:text-secondary mx-auto mb-2" size={24} />
               <p className="text-xs font-medium text-primary">{userStats.nextGoal}</p>
-              <p className="text-sm text-muted-foreground">Próxima meta</p>
+              <p className="text-sm text-muted-primary">Próxima meta</p>
             </CardContent>
           </Card>
         </div>
@@ -95,7 +93,7 @@ const Dashboard = () => {
         {/* Current Workout */}
         <Card className="shadow-xl border-0 bg-card mb-8">
           <CardHeader className="bg-primary text-white rounded-t-lg">
-            <CardTitle className="flex items-center justify-between">
+            <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
               <div>
                 <h2 className="text-xl font-poppins">{currentWorkout.name}</h2>
                 <p className="text-white/90 text-sm">{currentWorkout.type}</p>
@@ -104,7 +102,7 @@ const Dashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
               <div className="flex gap-6 text-sm">
                 <div className="flex items-center gap-2">
                   <Clock size={16} className="text-primary" />
@@ -115,7 +113,7 @@ const Dashboard = () => {
                   <span className="text-foreground">{currentWorkout.difficulty}</span>
                 </div>
               </div>
-              <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+              <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 w-full sm:w-auto mt-4 sm:mt-0">
                 <Play size={16} className="mr-2" />
                 Iniciar Treino
               </Button>
@@ -123,14 +121,13 @@ const Dashboard = () => {
 
             <div className="space-y-4">
               <h3 className="font-poppins font-bold text-lg text-primary mb-4">
-                Exercícios de hoje:
+                Exercícios de hoje
               </h3>
-              
               {currentWorkout.exercises.map((exercise, index) => (
                 <div key={index} className="flex justify-between items-center p-4 bg-accent rounded-xl">
                   <div>
                     <p className="font-medium text-primary">{exercise.name}</p>
-                    <p className="text-sm text-muted-foreground">{exercise.sets}</p>
+                    <p className="text-sm text-foreground dark:text-muted-foreground">{exercise.sets}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium text-primary">{exercise.weight}</p>

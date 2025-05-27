@@ -13,7 +13,7 @@ const Hero = () => {
         </div>
         
         <h1 className="text-4xl md:text-6xl font-poppins font-bold text-primary mb-4 animate-fade-in">
-          PulseOn
+          <span>Pulse</span><span style={{color:'#B1126A'}}>On</span>
         </h1>
         
         <p className="text-xl md:text-2xl text-gray-600 mb-8 animate-fade-in">
