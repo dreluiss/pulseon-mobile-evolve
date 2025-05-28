@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { AlertTriangle } from "lucide-react";
@@ -17,10 +18,10 @@ const RestrictionsStep = ({ data, updateData, onNext, onPrev }: RestrictionsStep
         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <AlertTriangle className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-foreground mb-2">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
           Você tem alguma restrição ou lesão?
         </h3>
-        <p className="text-muted-foreground">
+        <p className="text-gray-600 dark:text-gray-400">
           Nos conte sobre qualquer limitação física para adaptarmos seus treinos
         </p>
       </div>
@@ -31,7 +32,7 @@ const RestrictionsStep = ({ data, updateData, onNext, onPrev }: RestrictionsStep
             <AlertTriangle className="text-primary mt-0.5" size={20} />
             <div>
               <h4 className="font-medium text-primary mb-1">Importante</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
                 Se você tem problemas de saúde ou lesões sérias, consulte um médico 
                 antes de iniciar qualquer programa de exercícios.
               </p>
@@ -43,10 +44,10 @@ const RestrictionsStep = ({ data, updateData, onNext, onPrev }: RestrictionsStep
           placeholder="Descreva qualquer lesão, dor ou limitação física que você tenha. Por exemplo: dor no joelho direito, problema nas costas, cirurgia recente, etc. Se não tiver nenhuma restrição, pode deixar em branco."
           value={data.restrictions}
           onChange={(e) => updateData("restrictions", e.target.value)}
-          className="min-h-[120px] resize-none"
+          className="min-h-[120px] resize-none bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white"
         />
 
-        <div className="text-sm text-muted-foreground">
+        <div className="text-sm text-gray-600 dark:text-gray-400">
           <p>
             <strong>Exemplos comuns:</strong> Dor no joelho, lombalgia, tendinite no ombro, 
             problemas no punho, limitações de mobilidade, etc.
@@ -58,7 +59,7 @@ const RestrictionsStep = ({ data, updateData, onNext, onPrev }: RestrictionsStep
         <Button 
           onClick={onPrev}
           variant="outline"
-          className="flex-1"
+          className="flex-1 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
           size="lg"
         >
           Voltar

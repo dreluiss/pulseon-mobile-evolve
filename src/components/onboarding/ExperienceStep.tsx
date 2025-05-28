@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Star, Award, Trophy } from "lucide-react";
@@ -39,7 +40,6 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
     updateData("experience", levelId);
   };
 
-  // Avança automaticamente após seleção
   useEffect(() => {
     if (data.experience) {
       const timer = setTimeout(() => {
@@ -55,10 +55,10 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <Award className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-foreground mb-2">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
           Qual seu nível de experiência?
         </h3>
-        <p className="text-muted-foreground">
+        <p className="text-gray-600 dark:text-gray-400">
           Isso nos ajuda a criar treinos adequados ao seu nível
         </p>
       </div>
@@ -75,17 +75,17 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
               className={`w-full p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg flex items-center gap-4 ${
                 isSelected 
                   ? 'border-primary bg-primary/5 shadow-lg scale-105' 
-                  : 'border-border hover:border-primary/50'
+                  : 'border-gray-300 dark:border-gray-600 hover:border-primary/50 bg-white dark:bg-gray-800'
               }`}
             >
               <div className={`w-12 h-12 ${level.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
                 <Icon size={24} />
               </div>
               <div>
-                <h4 className="font-poppins font-bold text-lg mb-1 text-foreground">
+                <h4 className="font-inter font-semibold text-lg mb-1 text-gray-900 dark:text-white">
                   {level.title}
                 </h4>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
                   {level.description}
                 </p>
               </div>
@@ -98,7 +98,7 @@ const ExperienceStep = ({ data, updateData, onNext, onPrev }: ExperienceStepProp
         <Button 
           onClick={onPrev}
           variant="outline"
-          className="flex-1"
+          className="flex-1 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
           size="lg"
         >
           Voltar

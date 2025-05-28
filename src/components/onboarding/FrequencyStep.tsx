@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock } from "lucide-react";
@@ -36,7 +37,6 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
     updateData("frequency", frequencyId);
   };
 
-  // Avança automaticamente após seleção
   useEffect(() => {
     if (data.frequency) {
       const timer = setTimeout(() => {
@@ -52,10 +52,10 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <Calendar className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-foreground mb-2">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
           Quantas vezes por semana você quer treinar?
         </h3>
-        <p className="text-muted-foreground">
+        <p className="text-gray-600 dark:text-gray-400">
           Escolha uma frequência que se encaixe na sua rotina
         </p>
       </div>
@@ -71,19 +71,19 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
               className={`w-full p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg ${
                 isSelected 
                   ? 'border-primary bg-primary/5 shadow-lg scale-105' 
-                  : 'border-border hover:border-primary/50'
+                  : 'border-gray-300 dark:border-gray-600 hover:border-primary/50 bg-white dark:bg-gray-800'
               }`}
             >
               <div className="flex justify-between items-start mb-3">
-                <h4 className="font-poppins font-bold text-lg text-foreground">
+                <h4 className="font-inter font-semibold text-lg text-gray-900 dark:text-white">
                   {frequency.title}
                 </h4>
-                <div className="flex items-center text-muted-foreground text-sm">
+                <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm">
                   <Clock size={16} className="mr-1" />
                   {frequency.duration}
                 </div>
               </div>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
                 {frequency.description}
               </p>
             </button>
@@ -95,7 +95,7 @@ const FrequencyStep = ({ data, updateData, onNext, onPrev }: FrequencyStepProps)
         <Button 
           onClick={onPrev}
           variant="outline"
-          className="flex-1"
+          className="flex-1 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
           size="lg"
         >
           Voltar

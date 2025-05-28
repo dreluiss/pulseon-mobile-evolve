@@ -91,7 +91,7 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary/20 p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-black p-4">
       <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
       </div>
@@ -99,29 +99,29 @@ const Onboarding = () => {
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8 pt-8">
           <Logo size="lg" className="justify-center mb-6" />
-          <h1 className="text-2xl font-inter font-semibold text-neutral-dark mb-3">
+          <h1 className="text-2xl font-inter font-semibold text-gray-900 dark:text-white mb-3">
             Vamos personalizar seu treino
           </h1>
-          <p className="text-neutral-secondary">
+          <p className="text-gray-600 dark:text-gray-400">
             Responda algumas perguntas para criarmos o treino perfeito para você
           </p>
         </div>
 
         <div className="mb-8">
           <div className="flex justify-between items-center mb-3">
-            <span className="text-sm font-medium text-neutral-dark">
+            <span className="text-sm font-medium text-gray-900 dark:text-white">
               Passo {currentStep + 1} de {totalSteps}
             </span>
-            <span className="text-sm font-medium text-neutral-dark">
+            <span className="text-sm font-medium text-gray-900 dark:text-white">
               {Math.round(progress)}%
             </span>
           </div>
           <Progress value={progress} className="h-2" />
         </div>
 
-        <Card className="shadow-sm border border-gray-100 bg-white min-h-[500px]">
+        <Card className="shadow-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 min-h-[500px]">
           <CardHeader className="pb-6">
-            <CardTitle className="text-xl font-inter font-semibold text-center text-neutral-dark">
+            <CardTitle className="text-xl font-inter font-semibold text-center text-gray-900 dark:text-white">
               {stepTitles[currentStep]}
             </CardTitle>
           </CardHeader>

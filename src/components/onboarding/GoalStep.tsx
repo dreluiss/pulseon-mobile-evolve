@@ -62,10 +62,10 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
         <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
           <Target className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-neutral-dark mb-2">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
           Qual é o seu objetivo principal?
         </h3>
-        <p className="text-neutral-secondary">
+        <p className="text-gray-600 dark:text-gray-400">
           Escolha o que mais te motiva a treinar
         </p>
       </div>
@@ -82,16 +82,16 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
               className={`p-6 rounded-lg border-2 transition-all text-left hover:shadow-sm ${
                 isSelected 
                   ? 'border-primary bg-primary/5 shadow-sm' 
-                  : 'border-gray-200 hover:border-primary/50 bg-white'
+                  : 'border-gray-300 dark:border-gray-600 hover:border-primary/50 bg-white dark:bg-gray-800'
               }`}
             >
               <div className={`w-12 h-12 ${goal.color} rounded-lg flex items-center justify-center mb-4`}>
                 <Icon size={24} />
               </div>
-              <h4 className="font-inter font-semibold text-lg mb-2 text-neutral-dark">
+              <h4 className="font-inter font-semibold text-lg mb-2 text-gray-900 dark:text-white">
                 {goal.title}
               </h4>
-              <p className="text-neutral-secondary text-sm">
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
                 {goal.description}
               </p>
             </button>
@@ -103,7 +103,7 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
         <Button 
           onClick={onPrev}
           variant="outline"
-          className="flex-1 border-gray-200 text-neutral-dark hover:bg-gray-50"
+          className="flex-1 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
           size="lg"
         >
           Voltar
