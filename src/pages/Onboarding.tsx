@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import Logo from "@/components/Logo";
@@ -12,6 +12,8 @@ import LocationStep from "@/components/onboarding/LocationStep";
 import EquipmentStep from "@/components/onboarding/EquipmentStep";
 import RestrictionsStep from "@/components/onboarding/RestrictionsStep";
 import SummaryStep from "@/components/onboarding/SummaryStep";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export interface OnboardingData {
   name: string;
@@ -25,6 +27,8 @@ export interface OnboardingData {
 }
 
 const Onboarding = () => {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState<OnboardingData>({
     name: "",
@@ -36,6 +40,25 @@ const Onboarding = () => {
     equipment: [],
     restrictions: ""
   });
+
+  useEffect(() => {
+    // Se não há usuário autenticado, redireciona para auth
+    if (!loading && !user) {
+      navigate("/auth");
+    }
+  }, [user, loading, navigate]);
+
+  // Se ainda está carregando ou não há usuário, não renderiza nada
+  if (loading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Carregando...</p>
+        </div>
+      </div>
+    );
+  }
 
   const totalSteps = 8;
   const progress = ((currentStep + 1) / totalSteps) * 100;

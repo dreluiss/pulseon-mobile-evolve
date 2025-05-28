@@ -1,7 +1,12 @@
+
 import { Button } from "@/components/ui/button";
 import { CheckCircle, User, Target, Award, Calendar, MapPin, Dumbbell, AlertTriangle } from "lucide-react";
 import { OnboardingData } from "@/pages/Onboarding";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 interface SummaryStepProps {
   data: OnboardingData;
@@ -10,6 +15,9 @@ interface SummaryStepProps {
 
 const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const getGoalLabel = (goal: string) => {
     const goals = {
@@ -57,10 +65,53 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
     return equipment.map(eq => equipmentMap[eq as keyof typeof equipmentMap] || eq);
   };
 
-  const handleStartTraining = () => {
-    // Aqui você implementaria a lógica para salvar dados no Supabase
-    console.log("Dados completos do onboarding:", data);
-    navigate("/dashboard");
+  const handleStartTraining = async () => {
+    if (!user) {
+      toast({
+        title: "Erro de autenticação",
+        description: "Usuário não encontrado. Faça login novamente.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      // Salvar dados do onboarding no perfil do usuário
+      const { error } = await supabase
+        .from('user_profiles')
+        .upsert({
+          user_id: user.id,
+          objetivo: data.goal,
+          nivel_experiencia: data.experience,
+          frequencia_treino: data.frequency,
+          restricoes: data.restrictions,
+          tempo_disponivel: data.frequency, // Usando frequency como tempo_disponível temporariamente
+          preferencias_treino: `Local: ${getLocationLabel(data.location)}, Equipamentos: ${getEquipmentLabels(data.equipment).join(', ')}`,
+          data_onboarding: new Date().toISOString()
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Onboarding concluído!",
+        description: "Seu perfil foi configurado com sucesso. Bem-vindo ao PulseOn!"
+      });
+      
+      navigate("/dashboard");
+    } catch (error: any) {
+      console.error("Erro ao salvar dados do onboarding:", error);
+      toast({
+        title: "Erro ao salvar dados",
+        description: "Não foi possível salvar suas informações. Tente novamente.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -69,75 +120,75 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-foreground mb-2">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
           Perfeito! Vamos revisar suas informações
         </h3>
-        <p className="text-muted-foreground">
+        <p className="text-gray-600 dark:text-gray-400">
           Confirme se está tudo correto antes de criarmos seu treino personalizado
         </p>
       </div>
 
       <div className="space-y-4">
-        <div className="bg-card border border-border rounded-xl p-4">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <User className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-foreground">Informações Pessoais</h4>
+            <h4 className="font-poppins font-bold text-gray-900 dark:text-white">Informações Pessoais</h4>
           </div>
-          <div className="text-sm text-muted-foreground space-y-1">
+          <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
             <p><strong>Nome:</strong> {data.name}</p>
             <p><strong>Idade:</strong> {data.age} anos</p>
           </div>
         </div>
 
-        <div className="bg-card border border-border rounded-xl p-4">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <Target className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-foreground">Objetivo</h4>
+            <h4 className="font-poppins font-bold text-gray-900 dark:text-white">Objetivo</h4>
           </div>
-          <p className="text-sm text-muted-foreground">{getGoalLabel(data.goal)}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{getGoalLabel(data.goal)}</p>
         </div>
 
-        <div className="bg-card border border-border rounded-xl p-4">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <Award className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-foreground">Experiência</h4>
+            <h4 className="font-poppins font-bold text-gray-900 dark:text-white">Experiência</h4>
           </div>
-          <p className="text-sm text-muted-foreground">{getExperienceLabel(data.experience)}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{getExperienceLabel(data.experience)}</p>
         </div>
 
-        <div className="bg-card border border-border rounded-xl p-4">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <Calendar className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-foreground">Frequência</h4>
+            <h4 className="font-poppins font-bold text-gray-900 dark:text-white">Frequência</h4>
           </div>
-          <p className="text-sm text-muted-foreground">{data.frequency} vezes por semana</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{data.frequency} vezes por semana</p>
         </div>
 
-        <div className="bg-card border border-border rounded-xl p-4">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <MapPin className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-foreground">Local de Treino</h4>
+            <h4 className="font-poppins font-bold text-gray-900 dark:text-white">Local de Treino</h4>
           </div>
-          <p className="text-sm text-muted-foreground">{getLocationLabel(data.location)}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{getLocationLabel(data.location)}</p>
         </div>
 
-        <div className="bg-card border border-border rounded-xl p-4">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
           <div className="flex items-center gap-3 mb-3">
             <Dumbbell className="text-primary" size={20} />
-            <h4 className="font-poppins font-bold text-foreground">Equipamentos</h4>
+            <h4 className="font-poppins font-bold text-gray-900 dark:text-white">Equipamentos</h4>
           </div>
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-gray-600 dark:text-gray-400">
             {getEquipmentLabels(data.equipment).join(", ")}
           </div>
         </div>
 
         {data.restrictions && (
-          <div className="bg-card border border-border rounded-xl p-4">
+          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
             <div className="flex items-center gap-3 mb-3">
               <AlertTriangle className="text-primary" size={20} />
-              <h4 className="font-poppins font-bold text-foreground">Restrições</h4>
+              <h4 className="font-poppins font-bold text-gray-900 dark:text-white">Restrições</h4>
             </div>
-            <p className="text-sm text-muted-foreground">{data.restrictions}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">{data.restrictions}</p>
           </div>
         )}
       </div>
@@ -155,7 +206,7 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
         <Button 
           onClick={onPrev}
           variant="outline"
-          className="flex-1"
+          className="flex-1 border-gray-300 dark:border-gray-600"
           size="lg"
         >
           Voltar
@@ -164,8 +215,9 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
           onClick={handleStartTraining}
           className="flex-1 bg-primary hover:opacity-90"
           size="lg"
+          disabled={isLoading}
         >
-          Iniciar meu treino!
+          {isLoading ? "Configurando..." : "Iniciar meu treino!"}
         </Button>
       </div>
     </div>
