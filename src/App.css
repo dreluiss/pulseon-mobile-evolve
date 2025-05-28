@@ -1,3 +1,4 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -13,11 +14,11 @@
 }
 
 .logo:hover {
-  filter: drop-shadow(0 0 2em #004D55aa);
+  filter: drop-shadow(0 0 2em #2A3F4Daa);
 }
 
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #EAE6DAaa);
+  filter: drop-shadow(0 0 2em #B6FF8Caa);
 }
 
 @keyframes logo-spin {
@@ -37,70 +38,72 @@
 
 .card {
   padding: 2em;
-  background-color: #FAFCFD;
-  color: #0F172A;
-  border: 1px solid #EAE6DA;
+  background-color: #FFFFFF;
+  color: #2D2D2D;
+  border: 1px solid #E4E4E4;
   border-radius: 0.5rem;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
 }
 
 input, textarea, select {
-  background: #fff;
-  color: #0F172A;
-  border: 1px solid #EAE6DA;
+  background: #FFFFFF;
+  color: #2D2D2D;
+  border: 1px solid #E4E4E4;
   border-radius: 0.375rem;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.03);
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.02);
 }
 
 input::placeholder, textarea::placeholder {
-  color: #7B8794;
+  color: #7A7A7A;
   opacity: 1;
 }
 
 label, .label, .checkbox-label {
-  color: #0F172A;
+  color: #2D2D2D;
+  font-weight: 500;
 }
 
 button {
-  color: #0F172A;
+  color: #2D2D2D;
   border-radius: 0.375rem;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.03);
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.02);
+  font-weight: 500;
 }
 
 .dark .card {
-  background-color: #00292D;
-  color: #EAE6DA;
-  border-color: #222831;
-  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
+  background-color: #1E1E1E;
+  color: #FFFFFF;
+  border-color: #3C3C3C;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.2);
 }
 
 .dark input, .dark textarea, .dark select {
-  background: #000;
-  color: #EAE6DA;
-  border: 1px solid #222831;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.12);
+  background: #1E1E1E;
+  color: #FFFFFF;
+  border: 1px solid #3C3C3C;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.15);
 }
 
 .dark input::placeholder, .dark textarea::placeholder {
-  color: #B0B8C1;
+  color: #A3A3A3;
   opacity: 1;
 }
 
 .dark label, .dark .label, .dark .checkbox-label {
-  color: #EAE6DA;
+  color: #FFFFFF;
 }
 
 .dark button {
-  color: #EAE6DA;
-  background: #004D55;
+  color: #FFFFFF;
+  background: #2A3F4D;
   border: none;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.18);
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
 }
 
 .read-the-docs {
-  color: #004D55;
+  color: #2A3F4D;
 }
 
 .dark .read-the-docs {
-  color: #EAE6DA;
+  color: #B6FF8C;
 }

@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -25,36 +26,41 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#004D55", // Azul petróleo
+          DEFAULT: "#2A3F4D", // Azul petróleo
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#EAE6DA", // Champagne claro
-          foreground: "#004D55", // Azul petróleo
+          DEFAULT: "#F5F5F5", // Cinza claro
+          foreground: "#2D2D2D", // Texto escuro
         },
         accent: {
-          DEFAULT: "#EAE6DA", // Champagne claro
-          foreground: "#004D55", // Azul petróleo
+          DEFAULT: "#B6FF8C", // Verde lima claro
+          foreground: "#2D2D2D",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#F5F5F5",
+          foreground: "#7A7A7A", // Texto secundário
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "#EF4444",
+          foreground: "#FFFFFF",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "#FFFFFF",
+          foreground: "#2D2D2D",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "#FFFFFF",
+          foreground: "#2D2D2D",
         },
+        neutral: {
+          light: "#F5F5F5",
+          dark: "#2D2D2D",
+          secondary: "#7A7A7A",
+        }
       },
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
         inter: ["Inter", "sans-serif"],
       },
       borderRadius: {

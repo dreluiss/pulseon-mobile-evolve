@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -19,10 +20,8 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Aqui será integrado com Supabase Auth
     console.log("Login attempt:", { email, password });
     
-    // Simular loading e redirecionar para dashboard
     setTimeout(() => {
       setIsLoading(false);
       navigate("/dashboard");
@@ -30,64 +29,64 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-secondary/20 flex items-center justify-center p-4">
       <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
       </div>
       
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Logo size="lg" className="justify-center mb-4" />
-          <h1 className="text-2xl font-poppins font-bold text-primary mb-2">
-            Bem-vindo de volta!
+          <Logo size="lg" className="justify-center mb-6" />
+          <h1 className="text-2xl font-inter font-semibold text-neutral-dark mb-2">
+            Bem-vindo de volta
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-neutral-secondary">
             Entre na sua conta para continuar seus treinos
           </p>
         </div>
 
-        <Card className="shadow-xl border-0 bg-card">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-xl font-poppins text-center text-primary">Login</CardTitle>
-            <CardDescription className="text-center text-muted-foreground">
+        <Card className="shadow-sm border border-gray-100 bg-white">
+          <CardHeader className="space-y-1 pb-6">
+            <CardTitle className="text-xl font-inter font-semibold text-center text-neutral-dark">Entrar</CardTitle>
+            <CardDescription className="text-center text-neutral-secondary">
               Digite seus dados para acessar sua conta
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-foreground">E-mail</Label>
+                <Label htmlFor="email" className="text-neutral-dark font-medium">E-mail</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-neutral-secondary" />
                   <Input
                     id="email"
                     type="email"
                     placeholder="seu@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 bg-background text-foreground border-border"
+                    className="pl-10 bg-white text-neutral-dark border-gray-200 focus:border-primary focus:ring-primary/20"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-foreground">Senha</Label>
+                <Label htmlFor="password" className="text-neutral-dark font-medium">Senha</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-neutral-secondary" />
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Sua senha"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-10 bg-background text-foreground border-border"
+                    className="pl-10 pr-10 bg-white text-neutral-dark border-gray-200 focus:border-primary focus:ring-primary/20"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 h-4 w-4 text-muted-foreground hover:text-foreground"
+                    className="absolute right-3 top-3 h-4 w-4 text-neutral-secondary hover:text-neutral-dark transition-colors"
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
@@ -97,7 +96,7 @@ const Login = () => {
               <div className="flex items-center justify-between">
                 <Link 
                   to="/forgot-password" 
-                  className="text-sm text-primary hover:text-primary/80 transition-colors"
+                  className="text-sm text-primary hover:text-primary/80 transition-colors font-medium"
                 >
                   Esqueceu a senha?
                 </Link>
@@ -105,7 +104,7 @@ const Login = () => {
 
               <Button 
                 type="submit" 
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3"
                 disabled={isLoading}
               >
                 {isLoading ? "Entrando..." : "Entrar"}
@@ -113,7 +112,7 @@ const Login = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-neutral-secondary">
                 Não tem uma conta?{" "}
                 <Link 
                   to="/signup" 
@@ -129,7 +128,7 @@ const Login = () => {
         <div className="mt-8 text-center">
           <Link 
             to="/" 
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm text-neutral-secondary hover:text-neutral-dark transition-colors"
           >
             ← Voltar para home
           </Link>

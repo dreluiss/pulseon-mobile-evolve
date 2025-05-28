@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,46 +36,46 @@ const PersonalInfoStep = ({ data, updateData, onNext }: PersonalInfoStepProps) =
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
           <User className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-foreground mb-2">
-          Vamos nos conhecer melhor!
+        <h3 className="text-lg font-medium text-neutral-dark mb-2">
+          Vamos nos conhecer melhor
         </h3>
-        <p className="text-muted-foreground">
+        <p className="text-neutral-secondary">
           Precisamos de algumas informações básicas para personalizar seu treino
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="name">Nome completo</Label>
+          <Label htmlFor="name" className="text-neutral-dark font-medium">Nome completo</Label>
           <div className="relative">
-            <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <User className="absolute left-3 top-3 h-4 w-4 text-neutral-secondary" />
             <Input
               id="name"
               placeholder="Como podemos te chamar?"
               value={data.name}
               onChange={(e) => updateData("name", e.target.value)}
-              className={`pl-10 ${errors.name ? 'border-red-500' : ''}`}
+              className={`pl-10 bg-white border-gray-200 focus:border-primary focus:ring-primary/20 ${errors.name ? 'border-red-400' : ''}`}
             />
           </div>
           {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="age">Idade</Label>
+          <Label htmlFor="age" className="text-neutral-dark font-medium">Idade</Label>
           <div className="relative">
-            <Calendar className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Calendar className="absolute left-3 top-3 h-4 w-4 text-neutral-secondary" />
             <Input
               id="age"
               type="number"
               placeholder="Quantos anos você tem?"
               value={data.age}
               onChange={(e) => updateData("age", e.target.value)}
-              className={`pl-10 ${errors.age ? 'border-red-500' : ''}`}
+              className={`pl-10 bg-white border-gray-200 focus:border-primary focus:ring-primary/20 ${errors.age ? 'border-red-400' : ''}`}
               min="16"
               max="100"
             />
@@ -86,7 +87,7 @@ const PersonalInfoStep = ({ data, updateData, onNext }: PersonalInfoStepProps) =
       <div className="pt-6">
         <Button 
           onClick={handleNext}
-          className="w-full bg-primary hover:bg-primary/90"
+          className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3"
           size="lg"
         >
           Continuar

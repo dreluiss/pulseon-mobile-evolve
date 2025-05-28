@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -37,11 +38,8 @@ const Signup = () => {
     }
     
     setIsLoading(true);
-    
-    // Aqui será integrado com Supabase Auth
     console.log("Signup attempt:", formData);
     
-    // Simular loading e redirecionar para onboarding
     setTimeout(() => {
       setIsLoading(false);
       navigate("/onboarding");
@@ -49,35 +47,35 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-secondary/20 flex items-center justify-center p-4">
       <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
       </div>
       
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Logo size="lg" className="justify-center mb-4" />
-          <h1 className="text-2xl font-poppins font-bold text-primary mb-2">
+          <Logo size="lg" className="justify-center mb-6" />
+          <h1 className="text-2xl font-inter font-semibold text-neutral-dark mb-2">
             Crie sua conta
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-neutral-secondary">
             Comece sua jornada fitness personalizada hoje mesmo
           </p>
         </div>
 
-        <Card className="shadow-xl border-0 bg-card">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-xl font-poppins text-center text-primary">Cadastro</CardTitle>
-            <CardDescription className="text-center text-muted-foreground">
+        <Card className="shadow-sm border border-gray-100 bg-white">
+          <CardHeader className="space-y-1 pb-6">
+            <CardTitle className="text-xl font-inter font-semibold text-center text-neutral-dark">Cadastro</CardTitle>
+            <CardDescription className="text-center text-neutral-secondary">
               Preencha os dados para criar sua conta
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-foreground">Nome completo</Label>
+                <Label htmlFor="name" className="text-neutral-dark font-medium">Nome completo</Label>
                 <div className="relative">
-                  <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <User className="absolute left-3 top-3 h-4 w-4 text-neutral-secondary" />
                   <Input
                     id="name"
                     name="name"
@@ -85,16 +83,16 @@ const Signup = () => {
                     placeholder="Seu nome completo"
                     value={formData.name}
                     onChange={handleChange}
-                    className="pl-10 bg-background text-foreground border-border"
+                    className="pl-10 bg-white text-neutral-dark border-gray-200 focus:border-primary focus:ring-primary/20"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-foreground">E-mail</Label>
+                <Label htmlFor="email" className="text-neutral-dark font-medium">E-mail</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-neutral-secondary" />
                   <Input
                     id="email"
                     name="email"
@@ -102,16 +100,16 @@ const Signup = () => {
                     placeholder="seu@email.com"
                     value={formData.email}
                     onChange={handleChange}
-                    className="pl-10 bg-background text-foreground border-border"
+                    className="pl-10 bg-white text-neutral-dark border-gray-200 focus:border-primary focus:ring-primary/20"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-foreground">Senha</Label>
+                <Label htmlFor="password" className="text-neutral-dark font-medium">Senha</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-neutral-secondary" />
                   <Input
                     id="password"
                     name="password"
@@ -119,14 +117,14 @@ const Signup = () => {
                     placeholder="Mínimo 6 caracteres"
                     value={formData.password}
                     onChange={handleChange}
-                    className="pl-10 pr-10 bg-background text-foreground border-border"
+                    className="pl-10 pr-10 bg-white text-neutral-dark border-gray-200 focus:border-primary focus:ring-primary/20"
                     minLength={6}
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 h-4 w-4 text-muted-foreground hover:text-foreground"
+                    className="absolute right-3 top-3 h-4 w-4 text-neutral-secondary hover:text-neutral-dark transition-colors"
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
@@ -134,9 +132,9 @@ const Signup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-foreground">Confirmar senha</Label>
+                <Label htmlFor="confirmPassword" className="text-neutral-dark font-medium">Confirmar senha</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-neutral-secondary" />
                   <Input
                     id="confirmPassword"
                     name="confirmPassword"
@@ -144,13 +142,13 @@ const Signup = () => {
                     placeholder="Digite a senha novamente"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className="pl-10 pr-10 bg-background text-foreground border-border"
+                    className="pl-10 pr-10 bg-white text-neutral-dark border-gray-200 focus:border-primary focus:ring-primary/20"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-3 h-4 w-4 text-muted-foreground hover:text-foreground"
+                    className="absolute right-3 top-3 h-4 w-4 text-neutral-secondary hover:text-neutral-dark transition-colors"
                   >
                     {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
@@ -163,13 +161,13 @@ const Signup = () => {
                   checked={acceptTerms}
                   onCheckedChange={(checked) => setAcceptTerms(checked as boolean)}
                 />
-                <Label htmlFor="terms" className="text-sm text-muted-foreground">
+                <Label htmlFor="terms" className="text-sm text-neutral-secondary">
                   Aceito os{" "}
-                  <Link to="/terms" className="text-primary hover:text-primary/80">
+                  <Link to="/terms" className="text-primary hover:text-primary/80 font-medium">
                     termos de uso
                   </Link>
                   {" "}e{" "}
-                  <Link to="/privacy" className="text-primary hover:text-primary/80">
+                  <Link to="/privacy" className="text-primary hover:text-primary/80 font-medium">
                     política de privacidade
                   </Link>
                 </Label>
@@ -177,7 +175,7 @@ const Signup = () => {
 
               <Button 
                 type="submit" 
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3"
                 disabled={isLoading || !acceptTerms}
               >
                 {isLoading ? "Criando conta..." : "Criar conta"}
@@ -185,7 +183,7 @@ const Signup = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-neutral-secondary">
                 Já tem uma conta?{" "}
                 <Link 
                   to="/login" 
@@ -201,7 +199,7 @@ const Signup = () => {
         <div className="mt-8 text-center">
           <Link 
             to="/" 
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm text-neutral-secondary hover:text-neutral-dark transition-colors"
           >
             ← Voltar para home
           </Link>

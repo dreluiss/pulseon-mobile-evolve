@@ -1,68 +1,70 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 255 255 255; /* Branco puro */
-    --foreground: 15 23 42;
+    --background: 255 255 255; /* Branco */
+    --foreground: 45 45 45; /* #2D2D2D */
 
-    --card: 250 252 253; /* Cinza muito claro para destacar do fundo */
-    --card-foreground: 15 23 42;
+    --card: 255 255 255; /* Branco */
+    --card-foreground: 45 45 45;
 
     --popover: 255 255 255;
-    --popover-foreground: 15 23 42;
+    --popover-foreground: 45 45 45;
 
-    --primary: 0 77 85; /* Azul petróleo */
+    --primary: 42 63 77; /* #2A3F4D - Azul petróleo */
     --primary-foreground: 255 255 255;
 
-    --secondary: 234 230 218; /* Champagne claro */
-    --secondary-foreground: 0 77 85; /* Azul petróleo */
+    --secondary: 245 245 245; /* #F5F5F5 - Cinza claro */
+    --secondary-foreground: 45 45 45;
 
-    --muted: 239 242 245;
-    --muted-foreground: 100 116 139;
+    --muted: 245 245 245;
+    --muted-foreground: 122 122 122; /* #7A7A7A */
 
-    --accent: 234 230 218; /* Champagne claro */
-    --accent-foreground: 0 77 85; /* Azul petróleo */
+    --accent: 182 255 140; /* #B6FF8C - Verde lima claro */
+    --accent-foreground: 45 45 45;
 
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
 
-    --border: 222 228 235;
+    --border: 228 228 228;
     --input: 255 255 255;
-    --ring: 0 77 85;
+    --ring: 42 63 77;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 0 0 0; /* Preto puro */
-    --foreground: 234 230 218; /* Champagne claro para texto */
+    --background: 18 18 18; /* Preto muito escuro */
+    --foreground: 255 255 255;
 
-    --card: 0 41 45; /* Azul petróleo escurecido */
-    --card-foreground: 234 230 218;
+    --card: 30 30 30; /* Cinza escuro */
+    --card-foreground: 255 255 255;
 
-    --popover: 0 41 45;
-    --popover-foreground: 234 230 218;
+    --popover: 30 30 30;
+    --popover-foreground: 255 255 255;
 
-    --primary: 0 77 85; /* Azul petróleo */
-    --primary-foreground: 234 230 218;
+    --primary: 42 63 77; /* Azul petróleo */
+    --primary-foreground: 255 255 255;
 
-    --secondary: 234 230 218; /* Champagne claro */
-    --secondary-foreground: 0 0 0; /* Preto puro */
+    --secondary: 45 45 45; /* Cinza escuro */
+    --secondary-foreground: 255 255 255;
 
-    --muted: 24 33 45;
-    --muted-foreground: 148 163 184;
+    --muted: 45 45 45;
+    --muted-foreground: 163 163 163;
 
-    --accent: 0 41 45; /* Azul petróleo escurecido */
-    --accent-foreground: 234 230 218;
+    --accent: 182 255 140; /* Verde lima claro */
+    --accent-foreground: 18 18 18;
 
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
 
-    --border: 34 41 49;
-    --input: 0 41 45;
-    --ring: 234 230 218;
+    --border: 60 60 60;
+    --input: 30 30 30;
+    --ring: 182 255 140;
   }
 }
 
@@ -73,16 +75,22 @@
 
   body {
     @apply bg-background text-foreground font-inter;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-poppins font-bold;
+    @apply font-inter font-semibold;
+    color: #2D2D2D;
+  }
+
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: #FFFFFF;
   }
 }
 
 @layer components {
   .pulse-icon {
-    background: linear-gradient(45deg, #004d55, #C81D25);
+    background: linear-gradient(45deg, #2A3F4D, #B6FF8C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

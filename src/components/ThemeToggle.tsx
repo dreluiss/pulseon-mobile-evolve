@@ -1,3 +1,4 @@
+
 import { Moon, Sun } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -31,13 +32,12 @@ const ThemeToggle = () => {
     <button
       onClick={toggleTheme}
       aria-label={isDark ? "Ativar tema claro" : "Ativar tema escuro"}
-      className="w-9 h-9 flex items-center justify-center bg-transparent border-none shadow-none p-0 focus:outline-none focus:ring-0"
-      style={{ background: "none" }}
+      className="w-10 h-10 flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-neutral-dark dark:text-white"
     >
       {isDark ? (
-        <Sun className="h-6 w-6 text-white" />
+        <Sun className="h-5 w-5" />
       ) : (
-        <Moon className="h-6 w-6 text-black" />
+        <Moon className="h-5 w-5" />
       )}
     </button>
   );

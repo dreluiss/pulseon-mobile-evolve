@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -90,37 +91,37 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4">
+    <div className="min-h-screen bg-secondary/20 p-4">
       <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
       </div>
       
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8 pt-8">
-          <Logo size="lg" className="justify-center mb-4" />
-          <h1 className="text-2xl font-poppins font-bold text-primary mb-2">
-            Vamos personalizar seu treino!
+          <Logo size="lg" className="justify-center mb-6" />
+          <h1 className="text-2xl font-inter font-semibold text-neutral-dark mb-3">
+            Vamos personalizar seu treino
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-neutral-secondary">
             Responda algumas perguntas para criarmos o treino perfeito para você
           </p>
         </div>
 
         <div className="mb-8">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-foreground">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-sm font-medium text-neutral-dark">
               Passo {currentStep + 1} de {totalSteps}
             </span>
-            <span className="text-sm font-medium text-foreground">
+            <span className="text-sm font-medium text-neutral-dark">
               {Math.round(progress)}%
             </span>
           </div>
           <Progress value={progress} className="h-2" />
         </div>
 
-        <Card className="shadow-xl border-0 bg-card min-h-[500px]">
-          <CardHeader>
-            <CardTitle className="text-xl font-poppins text-center text-primary">
+        <Card className="shadow-sm border border-gray-100 bg-white min-h-[500px]">
+          <CardHeader className="pb-6">
+            <CardTitle className="text-xl font-inter font-semibold text-center text-neutral-dark">
               {stepTitles[currentStep]}
             </CardTitle>
           </CardHeader>

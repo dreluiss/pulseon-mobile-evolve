@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Target, TrendingUp, Zap, Heart } from "lucide-react";
@@ -46,7 +47,6 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
     updateData("goal", goalId);
   };
 
-  // Avança automaticamente após seleção
   useEffect(() => {
     if (data.goal) {
       const timer = setTimeout(() => {
@@ -57,15 +57,15 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
   }, [data.goal, onNext]);
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-8 animate-fade-in">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
           <Target className="text-primary" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-foreground mb-2">
+        <h3 className="text-lg font-medium text-neutral-dark mb-2">
           Qual é o seu objetivo principal?
         </h3>
-        <p className="text-muted-foreground">
+        <p className="text-neutral-secondary">
           Escolha o que mais te motiva a treinar
         </p>
       </div>
@@ -79,19 +79,19 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
             <button
               key={goal.id}
               onClick={() => handleGoalSelect(goal.id)}
-              className={`p-6 rounded-2xl border-2 transition-all text-left hover:shadow-lg ${
+              className={`p-6 rounded-lg border-2 transition-all text-left hover:shadow-sm ${
                 isSelected 
-                  ? 'border-primary bg-primary/5 shadow-lg scale-105' 
-                  : 'border-border hover:border-primary/50'
+                  ? 'border-primary bg-primary/5 shadow-sm' 
+                  : 'border-gray-200 hover:border-primary/50 bg-white'
               }`}
             >
               <div className={`w-12 h-12 ${goal.color} rounded-lg flex items-center justify-center mb-4`}>
                 <Icon size={24} />
               </div>
-              <h4 className="font-poppins font-bold text-lg mb-2 text-foreground">
+              <h4 className="font-inter font-semibold text-lg mb-2 text-neutral-dark">
                 {goal.title}
               </h4>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-neutral-secondary text-sm">
                 {goal.description}
               </p>
             </button>
@@ -103,7 +103,7 @@ const GoalStep = ({ data, updateData, onNext, onPrev }: GoalStepProps) => {
         <Button 
           onClick={onPrev}
           variant="outline"
-          className="flex-1"
+          className="flex-1 border-gray-200 text-neutral-dark hover:bg-gray-50"
           size="lg"
         >
           Voltar

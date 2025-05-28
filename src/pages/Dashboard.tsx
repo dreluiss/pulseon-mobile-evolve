@@ -1,13 +1,12 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import Logo from "@/components/Logo";
-import ThemeToggle from "@/components/ThemeToggle";
 import { Play, Clock, Target, Award, Calendar, Settings, User } from "lucide-react";
 import Header from "@/components/Header";
 
-const iconButtonClass = "bg-transparent p-2 rounded-full transition text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10";
+const iconButtonClass = "bg-transparent p-2 rounded-full transition text-neutral-dark dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 border border-gray-200 dark:border-gray-600";
 
 const Dashboard = () => {
   const [currentWorkout] = useState({
@@ -32,7 +31,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4">
+    <div className="min-h-screen bg-secondary/20 p-4">
       <Header
         actions={
           <>
@@ -48,54 +47,51 @@ const Dashboard = () => {
         }
       />
       <div className="max-w-4xl mx-auto">
-        {/* Welcome Section */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-poppins font-bold text-primary mb-2">
-            Bem-vindo de volta!
+          <h1 className="text-3xl font-inter font-semibold text-neutral-dark mb-2">
+            Bem-vindo de volta
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-neutral-secondary">
             Seu treino personalizado está pronto. Vamos continuar sua jornada!
           </p>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <Card className="bg-card border-border shadow-md shadow-gray-300 dark:shadow-none">
-            <CardContent className="p-4 text-center">
-              <Target className="text-primary dark:text-primary mx-auto mb-2" size={24} />
-              <p className="text-2xl font-bold text-primary">{userStats.workoutsCompleted}</p>
-              <p className="text-sm text-muted-primary">Treinos</p>
+          <Card className="bg-white border border-gray-100 shadow-sm">
+            <CardContent className="p-6 text-center">
+              <Target className="text-primary mx-auto mb-3" size={24} />
+              <p className="text-2xl font-semibold text-neutral-dark">{userStats.workoutsCompleted}</p>
+              <p className="text-sm text-neutral-secondary">Treinos</p>
             </CardContent>
           </Card>
-          <Card className="bg-card border-border shadow-md shadow-gray-300 dark:shadow-none">
-            <CardContent className="p-4 text-center">
-              <Award className="text-foreground dark:text-secondary mx-auto mb-2" size={24} />
-              <p className="text-2xl font-bold text-primary">{userStats.currentStreak}</p>
-              <p className="text-sm text-muted-primary">Sequência</p>
+          <Card className="bg-white border border-gray-100 shadow-sm">
+            <CardContent className="p-6 text-center">
+              <Award className="text-primary mx-auto mb-3" size={24} />
+              <p className="text-2xl font-semibold text-neutral-dark">{userStats.currentStreak}</p>
+              <p className="text-sm text-neutral-secondary">Sequência</p>
             </CardContent>
           </Card>
-          <Card className="bg-card border-border shadow-md shadow-gray-300 dark:shadow-none">
-            <CardContent className="p-4 text-center">
-              <Clock className="text-primary dark:text-primary mx-auto mb-2" size={24} />
-              <p className="text-2xl font-bold text-primary">{userStats.totalHours}h</p>
-              <p className="text-sm text-muted-primary">Total</p>
+          <Card className="bg-white border border-gray-100 shadow-sm">
+            <CardContent className="p-6 text-center">
+              <Clock className="text-primary mx-auto mb-3" size={24} />
+              <p className="text-2xl font-semibold text-neutral-dark">{userStats.totalHours}h</p>
+              <p className="text-sm text-neutral-secondary">Total</p>
             </CardContent>
           </Card>
-          <Card className="bg-card border-border shadow-md shadow-gray-300 dark:shadow-none">
-            <CardContent className="p-4 text-center">
-              <Calendar className="text-foreground dark:text-secondary mx-auto mb-2" size={24} />
-              <p className="text-xs font-medium text-primary">{userStats.nextGoal}</p>
-              <p className="text-sm text-muted-primary">Próxima meta</p>
+          <Card className="bg-white border border-gray-100 shadow-sm">
+            <CardContent className="p-6 text-center">
+              <Calendar className="text-primary mx-auto mb-3" size={24} />
+              <p className="text-xs font-medium text-neutral-dark">{userStats.nextGoal}</p>
+              <p className="text-sm text-neutral-secondary">Próxima meta</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Current Workout */}
-        <Card className="shadow-xl border-0 bg-card mb-8">
+        <Card className="shadow-sm border border-gray-100 bg-white mb-8">
           <CardHeader className="bg-primary text-white rounded-t-lg">
             <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
               <div>
-                <h2 className="text-xl font-poppins">{currentWorkout.name}</h2>
+                <h2 className="text-xl font-inter font-semibold">{currentWorkout.name}</h2>
                 <p className="text-white/90 text-sm">{currentWorkout.type}</p>
               </div>
               <Play size={24} className="text-white" />
@@ -106,61 +102,60 @@ const Dashboard = () => {
               <div className="flex gap-6 text-sm">
                 <div className="flex items-center gap-2">
                   <Clock size={16} className="text-primary" />
-                  <span className="text-foreground">{currentWorkout.duration}</span>
+                  <span className="text-neutral-dark">{currentWorkout.duration}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Target size={16} className="text-primary" />
-                  <span className="text-foreground">{currentWorkout.difficulty}</span>
+                  <span className="text-neutral-dark">{currentWorkout.difficulty}</span>
                 </div>
               </div>
-              <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 w-full sm:w-auto mt-4 sm:mt-0">
+              <Button className="bg-primary hover:bg-primary/90 text-white font-medium w-full sm:w-auto">
                 <Play size={16} className="mr-2" />
                 Iniciar Treino
               </Button>
             </div>
 
             <div className="space-y-4">
-              <h3 className="font-poppins font-bold text-lg text-primary mb-4">
+              <h3 className="font-inter font-semibold text-lg text-neutral-dark mb-4">
                 Exercícios de hoje
               </h3>
               {currentWorkout.exercises.map((exercise, index) => (
-                <div key={index} className="flex justify-between items-center p-4 bg-accent rounded-xl">
+                <div key={index} className="flex justify-between items-center p-4 bg-secondary/50 rounded-lg border border-gray-100">
                   <div>
-                    <p className="font-medium text-primary">{exercise.name}</p>
-                    <p className="text-sm text-foreground dark:text-muted-foreground">{exercise.sets}</p>
+                    <p className="font-medium text-neutral-dark">{exercise.name}</p>
+                    <p className="text-sm text-neutral-secondary">{exercise.sets}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-primary">{exercise.weight}</p>
+                    <p className="text-sm font-medium text-neutral-dark">{exercise.weight}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-6 p-4 bg-primary/10 rounded-xl">
+            <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/20">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-primary">Progresso Semanal</span>
-                <span className="text-sm text-primary">3/5 treinos</span>
+                <span className="text-sm font-medium text-neutral-dark">Progresso Semanal</span>
+                <span className="text-sm text-neutral-dark">3/5 treinos</span>
               </div>
               <Progress value={60} className="h-2" />
             </div>
           </CardContent>
         </Card>
 
-        {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer bg-card border-border">
+          <Card className="hover:shadow-md transition-shadow cursor-pointer bg-white border border-gray-100">
             <CardContent className="p-6 text-center">
               <Calendar className="text-primary mx-auto mb-3" size={32} />
-              <h3 className="font-poppins font-bold text-lg mb-2 text-foreground">Histórico</h3>
-              <p className="text-muted-foreground text-sm">Veja seus treinos anteriores</p>
+              <h3 className="font-inter font-semibold text-lg mb-2 text-neutral-dark">Histórico</h3>
+              <p className="text-neutral-secondary text-sm">Veja seus treinos anteriores</p>
             </CardContent>
           </Card>
           
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer bg-card border-border">
+          <Card className="hover:shadow-md transition-shadow cursor-pointer bg-white border border-gray-100">
             <CardContent className="p-6 text-center">
               <Settings className="text-primary mx-auto mb-3" size={32} />
-              <h3 className="font-poppins font-bold text-lg mb-2 text-foreground">Configurar</h3>
-              <p className="text-muted-foreground text-sm">Ajuste seus objetivos</p>
+              <h3 className="font-inter font-semibold text-lg mb-2 text-neutral-dark">Configurar</h3>
+              <p className="text-neutral-secondary text-sm">Ajuste seus objetivos</p>
             </CardContent>
           </Card>
         </div>
