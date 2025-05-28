@@ -18,7 +18,7 @@
 }
 
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #B6FF8Caa);
+  filter: drop-shadow(0 0 2em #2A3F4Daa);
 }
 
 @keyframes logo-spin {
@@ -46,57 +46,54 @@
 }
 
 input, textarea, select {
-  background: #FFFFFF;
-  color: #2D2D2D;
-  border: 1px solid #E4E4E4;
+  background: #FFFFFF !important;
+  color: #2D2D2D !important;
+  border: 1px solid #E4E4E4 !important;
   border-radius: 0.375rem;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.02);
 }
 
 input::placeholder, textarea::placeholder {
-  color: #7A7A7A;
+  color: #7A7A7A !important;
   opacity: 1;
 }
 
 label, .label, .checkbox-label {
-  color: #2D2D2D;
+  color: #2D2D2D !important;
   font-weight: 500;
 }
 
 button {
-  color: #2D2D2D;
   border-radius: 0.375rem;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.02);
   font-weight: 500;
 }
 
 .dark .card {
-  background-color: #1E1E1E;
-  color: #FFFFFF;
-  border-color: #3C3C3C;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.2);
+  background-color: #141414 !important;
+  color: #FFFFFF !important;
+  border-color: #282828 !important;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.3);
 }
 
 .dark input, .dark textarea, .dark select {
-  background: #1E1E1E;
-  color: #FFFFFF;
-  border: 1px solid #3C3C3C;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.15);
+  background: #141414 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #282828 !important;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
 }
 
 .dark input::placeholder, .dark textarea::placeholder {
-  color: #A3A3A3;
+  color: #A3A3A3 !important;
   opacity: 1;
 }
 
 .dark label, .dark .label, .dark .checkbox-label {
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
 
 .dark button {
-  color: #FFFFFF;
-  background: #2A3F4D;
-  border: none;
+  color: #FFFFFF !important;
   box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
 }
 
@@ -106,4 +103,30 @@ button {
 
 .dark .read-the-docs {
   color: #B6FF8C;
+}
+
+/* Força cores específicas para garantir consistência entre navegadores */
+.text-accent {
+  color: #2A3F4D !important;
+}
+
+.dark .text-accent {
+  color: #B6FF8C !important;
+}
+
+.bg-accent {
+  background-color: #2A3F4D !important;
+}
+
+.dark .bg-accent {
+  background-color: #B6FF8C !important;
+}
+
+/* Hero section específico */
+.hero-section {
+  background: #FFFFFF !important;
+}
+
+.dark .hero-section {
+  background: #000000 !important;
 }

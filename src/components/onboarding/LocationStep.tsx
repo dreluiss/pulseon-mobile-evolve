@@ -1,6 +1,8 @@
+
 import { Button } from "@/components/ui/button";
 import { MapPin, Home, Building, Trees } from "lucide-react";
 import { OnboardingData } from "@/pages/Onboarding";
+import { useEffect } from "react";
 
 interface LocationStepProps {
   data: OnboardingData;
@@ -45,6 +47,16 @@ const LocationStep = ({ data, updateData, onNext, onPrev }: LocationStepProps) =
     updateData("location", locationId);
   };
 
+  // Auto-advance when location is selected
+  useEffect(() => {
+    if (data.location) {
+      const timer = setTimeout(() => {
+        onNext();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [data.location, onNext]);
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="text-center mb-8">
@@ -77,7 +89,7 @@ const LocationStep = ({ data, updateData, onNext, onPrev }: LocationStepProps) =
               <div className={`w-12 h-12 ${location.color} rounded-lg flex items-center justify-center mb-4`}>
                 <Icon size={24} />
               </div>
-              <h4 className="font-poppins font-bold text-lg mb-2 text-foreground">
+              <h4 className="font-inter font-semibold text-lg mb-2 text-foreground">
                 {location.title}
               </h4>
               <p className="text-muted-foreground text-sm">

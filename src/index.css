@@ -6,10 +6,10 @@
 
 @layer base {
   :root {
-    --background: 255 255 255; /* Branco */
+    --background: 255 255 255; /* Branco puro */
     --foreground: 45 45 45; /* #2D2D2D */
 
-    --card: 255 255 255; /* Branco */
+    --card: 255 255 255; /* Branco puro */
     --card-foreground: 45 45 45;
 
     --popover: 255 255 255;
@@ -24,8 +24,8 @@
     --muted: 245 245 245;
     --muted-foreground: 122 122 122; /* #7A7A7A */
 
-    --accent: 182 255 140; /* #B6FF8C - Verde lima claro */
-    --accent-foreground: 45 45 45;
+    --accent: 42 63 77; /* Azul petróleo para tema claro */
+    --accent-foreground: 255 255 255;
 
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
@@ -38,32 +38,32 @@
   }
 
   .dark {
-    --background: 18 18 18; /* Preto muito escuro */
+    --background: 0 0 0; /* Preto puro */
     --foreground: 255 255 255;
 
-    --card: 30 30 30; /* Cinza escuro */
+    --card: 20 20 20; /* Cinza muito escuro */
     --card-foreground: 255 255 255;
 
-    --popover: 30 30 30;
+    --popover: 20 20 20;
     --popover-foreground: 255 255 255;
 
-    --primary: 42 63 77; /* Azul petróleo */
+    --primary: 42 63 77; /* Azul petróleo mantido */
     --primary-foreground: 255 255 255;
 
-    --secondary: 45 45 45; /* Cinza escuro */
+    --secondary: 30 30 30; /* Cinza escuro */
     --secondary-foreground: 255 255 255;
 
-    --muted: 45 45 45;
+    --muted: 30 30 30;
     --muted-foreground: 163 163 163;
 
-    --accent: 182 255 140; /* Verde lima claro */
-    --accent-foreground: 18 18 18;
+    --accent: 182 255 140; /* Verde lima para tema escuro */
+    --accent-foreground: 0 0 0;
 
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
 
-    --border: 60 60 60;
-    --input: 30 30 30;
+    --border: 40 40 40;
+    --input: 20 20 20;
     --ring: 182 255 140;
   }
 }
@@ -90,6 +90,13 @@
 
 @layer components {
   .pulse-icon {
+    background: linear-gradient(45deg, #2A3F4D, #FFFFFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .dark .pulse-icon {
     background: linear-gradient(45deg, #2A3F4D, #B6FF8C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

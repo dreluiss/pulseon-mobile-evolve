@@ -25,12 +25,12 @@ const Logo = ({ size = "md", showIcon = true, className = "" }: LogoProps) => {
       {showIcon && (
         <Activity 
           size={iconSizes[size]} 
-          className="text-primary"
+          className="text-primary dark:text-white"
         />
       )}
       <span className={`font-inter font-semibold ${sizeClasses[size]}`}>
-        <span className="text-primary">Pulse</span>
-        <span className="text-accent" style={{ color: '#B6FF8C' }}>
+        <span className="text-primary dark:text-white">Pulse</span>
+        <span className="text-primary dark:text-accent">
           On
         </span>
       </span>

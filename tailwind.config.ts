@@ -31,27 +31,27 @@ export default {
         },
         secondary: {
           DEFAULT: "#F5F5F5", // Cinza claro
-          foreground: "#2D2D2D", // Texto escuro
+          foreground: "#2D2D2D",
         },
         accent: {
-          DEFAULT: "#B6FF8C", // Verde lima claro
-          foreground: "#2D2D2D",
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
         muted: {
           DEFAULT: "#F5F5F5",
-          foreground: "#7A7A7A", // Texto secundário
+          foreground: "#7A7A7A",
         },
         destructive: {
           DEFAULT: "#EF4444",
           foreground: "#FFFFFF",
         },
         popover: {
-          DEFAULT: "#FFFFFF",
-          foreground: "#2D2D2D",
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
         card: {
-          DEFAULT: "#FFFFFF",
-          foreground: "#2D2D2D",
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
         neutral: {
           light: "#F5F5F5",
