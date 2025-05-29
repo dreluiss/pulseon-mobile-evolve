@@ -63,13 +63,6 @@ const Profile = () => {
       }
 
       if (data) {
-        // Extrair local_treino das preferencias_treino se ainda não existir como campo separado
-        let localTreino = data.local_treino || "";
-        if (!localTreino && data.preferencias_treino) {
-          const localMatch = data.preferencias_treino.match(/Local: ([^,]+)/);
-          localTreino = localMatch ? localMatch[1] : "";
-        }
-
         setProfile({
           objetivo: data.objetivo || "",
           nivel_experiencia: data.nivel_experiencia || "",
@@ -77,7 +70,7 @@ const Profile = () => {
           restricoes: data.restricoes || "",
           tempo_disponivel: data.tempo_disponivel || "",
           preferencias_treino: data.preferencias_treino || "",
-          local_treino: localTreino,
+          local_treino: (data as any).local_treino || "",
           data_onboarding: data.data_onboarding || ""
         });
       }
@@ -95,7 +88,6 @@ const Profile = () => {
     setIsLoading(true);
     
     try {
-      // Usar upsert para garantir que não haja conflito de chave única
       const { error } = await supabase
         .from('user_profiles')
         .upsert({
@@ -109,7 +101,7 @@ const Profile = () => {
           local_treino: profile.local_treino,
           data_onboarding: profile.data_onboarding || new Date().toISOString(),
           updated_at: new Date().toISOString()
-        }, {
+        } as any, {
           onConflict: 'user_id'
         });
 
@@ -185,7 +177,7 @@ const Profile = () => {
       "75": "75 minutos",
       "90": "90 minutos"
     };
-    return times[time] || time;
+    return times[time] || `${time} minutos`;
   };
 
   const getLocationLabel = (location: string) => {
@@ -450,7 +442,6 @@ const Profile = () => {
                       variant="outline"
                       className="border-gray-300 dark:border-gray-600"
                       onClick={() => {
-                        // Implementar reset de senha
                         toast({
                           title: "Em desenvolvimento",
                           description: "Esta funcionalidade será implementada em breve"
