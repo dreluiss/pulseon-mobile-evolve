@@ -85,6 +85,7 @@ const Profile = () => {
     setIsLoading(true);
     
     try {
+      // Usar upsert para garantir que não haja conflito de chave única
       const { error } = await supabase
         .from('user_profiles')
         .upsert({
@@ -95,7 +96,10 @@ const Profile = () => {
           restricoes: profile.restricoes,
           tempo_disponivel: profile.tempo_disponivel,
           preferencias_treino: profile.preferencias_treino,
-          data_onboarding: profile.data_onboarding || new Date().toISOString()
+          data_onboarding: profile.data_onboarding || new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id'
         });
 
       if (error) throw error;

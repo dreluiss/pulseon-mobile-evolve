@@ -78,7 +78,7 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
     setIsLoading(true);
     
     try {
-      // Salvar dados do onboarding no perfil do usuário
+      // Usar upsert para atualizar ou inserir dados do onboarding no perfil do usuário
       const { error } = await supabase
         .from('user_profiles')
         .upsert({
@@ -89,7 +89,10 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
           restricoes: data.restrictions,
           tempo_disponivel: data.frequency, // Usando frequency como tempo_disponível temporariamente
           preferencias_treino: `Local: ${getLocationLabel(data.location)}, Equipamentos: ${getEquipmentLabels(data.equipment).join(', ')}`,
-          data_onboarding: new Date().toISOString()
+          data_onboarding: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id'
         });
 
       if (error) {
