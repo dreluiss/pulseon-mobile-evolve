@@ -21,6 +21,7 @@ interface UserProfile {
   restricoes: string;
   tempo_disponivel: string;
   preferencias_treino: string;
+  local_treino: string;
   data_onboarding: string;
 }
 
@@ -36,6 +37,7 @@ const Profile = () => {
     restricoes: "",
     tempo_disponivel: "",
     preferencias_treino: "",
+    local_treino: "",
     data_onboarding: ""
   });
   
@@ -61,6 +63,13 @@ const Profile = () => {
       }
 
       if (data) {
+        // Extrair local_treino das preferencias_treino se ainda não existir como campo separado
+        let localTreino = data.local_treino || "";
+        if (!localTreino && data.preferencias_treino) {
+          const localMatch = data.preferencias_treino.match(/Local: ([^,]+)/);
+          localTreino = localMatch ? localMatch[1] : "";
+        }
+
         setProfile({
           objetivo: data.objetivo || "",
           nivel_experiencia: data.nivel_experiencia || "",
@@ -68,6 +77,7 @@ const Profile = () => {
           restricoes: data.restricoes || "",
           tempo_disponivel: data.tempo_disponivel || "",
           preferencias_treino: data.preferencias_treino || "",
+          local_treino: localTreino,
           data_onboarding: data.data_onboarding || ""
         });
       }
@@ -96,6 +106,7 @@ const Profile = () => {
           restricoes: profile.restricoes,
           tempo_disponivel: profile.tempo_disponivel,
           preferencias_treino: profile.preferencias_treino,
+          local_treino: profile.local_treino,
           data_onboarding: profile.data_onboarding || new Date().toISOString(),
           updated_at: new Date().toISOString()
         }, {
@@ -155,6 +166,36 @@ const Profile = () => {
       advanced: "Avançado"
     };
     return levels[experience] || experience;
+  };
+
+  const getFrequencyLabel = (frequency: string) => {
+    const frequencies: { [key: string]: string } = {
+      "2-3": "2-3 vezes por semana",
+      "4-5": "4-5 vezes por semana", 
+      "6-7": "6-7 vezes por semana"
+    };
+    return frequencies[frequency] || frequency;
+  };
+
+  const getTimeLabel = (time: string) => {
+    const times: { [key: string]: string } = {
+      "30": "30 minutos",
+      "45": "45 minutos",
+      "60": "60 minutos",
+      "75": "75 minutos",
+      "90": "90 minutos"
+    };
+    return times[time] || time;
+  };
+
+  const getLocationLabel = (location: string) => {
+    const locations: { [key: string]: string } = {
+      gym: "Academia Completa",
+      home: "Em Casa",
+      park: "Parque/Rua",
+      condo: "Academia do Condomínio"
+    };
+    return locations[location] || location;
   };
 
   return (
@@ -276,15 +317,19 @@ const Profile = () => {
                   <div className="space-y-2">
                     <Label className="text-gray-900 dark:text-white">Frequência de Treino</Label>
                     {isEditing ? (
-                      <Input
+                      <select
                         value={profile.frequencia_treino}
                         onChange={(e) => setProfile({...profile, frequencia_treino: e.target.value})}
-                        placeholder="Ex: 3 vezes por semana"
-                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                      />
+                        className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                      >
+                        <option value="">Selecione a frequência</option>
+                        <option value="2-3">2-3 vezes por semana</option>
+                        <option value="4-5">4-5 vezes por semana</option>
+                        <option value="6-7">6-7 vezes por semana</option>
+                      </select>
                     ) : (
                       <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md text-gray-900 dark:text-white">
-                        {profile.frequencia_treino || "Não informado"}
+                        {getFrequencyLabel(profile.frequencia_treino) || "Não informado"}
                       </p>
                     )}
                   </div>
@@ -292,15 +337,42 @@ const Profile = () => {
                   <div className="space-y-2">
                     <Label className="text-gray-900 dark:text-white">Tempo Disponível</Label>
                     {isEditing ? (
-                      <Input
+                      <select
                         value={profile.tempo_disponivel}
                         onChange={(e) => setProfile({...profile, tempo_disponivel: e.target.value})}
-                        placeholder="Ex: 45 minutos"
-                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                      />
+                        className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                      >
+                        <option value="">Selecione o tempo</option>
+                        <option value="30">30 minutos</option>
+                        <option value="45">45 minutos</option>
+                        <option value="60">60 minutos</option>
+                        <option value="75">75 minutos</option>
+                        <option value="90">90 minutos</option>
+                      </select>
                     ) : (
                       <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md text-gray-900 dark:text-white">
-                        {profile.tempo_disponivel || "Não informado"}
+                        {getTimeLabel(profile.tempo_disponivel) || "Não informado"}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-gray-900 dark:text-white">Local de Treino</Label>
+                    {isEditing ? (
+                      <select
+                        value={profile.local_treino}
+                        onChange={(e) => setProfile({...profile, local_treino: e.target.value})}
+                        className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                      >
+                        <option value="">Selecione o local</option>
+                        <option value="gym">Academia Completa</option>
+                        <option value="home">Em Casa</option>
+                        <option value="park">Parque/Rua</option>
+                        <option value="condo">Academia do Condomínio</option>
+                      </select>
+                    ) : (
+                      <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md text-gray-900 dark:text-white">
+                        {getLocationLabel(profile.local_treino) || "Não informado"}
                       </p>
                     )}
                   </div>
@@ -323,17 +395,17 @@ const Profile = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-gray-900 dark:text-white">Preferências de Treino</Label>
+                  <Label className="text-gray-900 dark:text-white">Equipamentos Disponíveis</Label>
                   {isEditing ? (
                     <Textarea
                       value={profile.preferencias_treino}
                       onChange={(e) => setProfile({...profile, preferencias_treino: e.target.value})}
-                      placeholder="Descreva suas preferências, exercícios favoritos, etc."
+                      placeholder="Descreva seus equipamentos disponíveis"
                       className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                     />
                   ) : (
                     <p className="p-2 bg-gray-50 dark:bg-gray-800 rounded-md text-gray-900 dark:text-white min-h-[60px]">
-                      {profile.preferencias_treino || "Nenhuma preferência específica"}
+                      {profile.preferencias_treino || "Nenhum equipamento informado"}
                     </p>
                   )}
                 </div>

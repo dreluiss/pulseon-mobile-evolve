@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { CheckCircle, User, Target, Award, Calendar, MapPin, Dumbbell, AlertTriangle } from "lucide-react";
+import { CheckCircle, User, Target, Award, Calendar, MapPin, Dumbbell, AlertTriangle, Clock } from "lucide-react";
 import { OnboardingData } from "@/pages/Onboarding";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
@@ -38,6 +38,15 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
     return levels[experience as keyof typeof levels] || experience;
   };
 
+  const getFrequencyLabel = (frequency: string) => {
+    const frequencies = {
+      "2-3": "2-3 vezes por semana",
+      "4-5": "4-5 vezes por semana",
+      "6-7": "6-7 vezes por semana"
+    };
+    return frequencies[frequency as keyof typeof frequencies] || frequency;
+  };
+
   const getLocationLabel = (location: string) => {
     const locations = {
       gym: "Academia Completa",
@@ -65,6 +74,16 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
     return equipment.map(eq => equipmentMap[eq as keyof typeof equipmentMap] || eq);
   };
 
+  const getTimeFromFrequency = (frequency: string) => {
+    // Mapear frequência para tempo médio baseado nas opções do onboarding
+    const timeMap = {
+      "2-3": "60", // 60 minutos para frequência baixa
+      "4-5": "45", // 45 minutos para frequência média
+      "6-7": "45"  // 45 minutos para frequência alta
+    };
+    return timeMap[frequency as keyof typeof timeMap] || "45";
+  };
+
   const handleStartTraining = async () => {
     if (!user) {
       toast({
@@ -87,8 +106,9 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
           nivel_experiencia: data.experience,
           frequencia_treino: data.frequency,
           restricoes: data.restrictions,
-          tempo_disponivel: data.frequency, // Usando frequency como tempo_disponível temporariamente
-          preferencias_treino: `Local: ${getLocationLabel(data.location)}, Equipamentos: ${getEquipmentLabels(data.equipment).join(', ')}`,
+          tempo_disponivel: getTimeFromFrequency(data.frequency), // Tempo baseado na frequência
+          preferencias_treino: getEquipmentLabels(data.equipment).join(', '), // Apenas equipamentos
+          local_treino: data.location, // Campo separado para local
           data_onboarding: new Date().toISOString(),
           updated_at: new Date().toISOString()
         }, {
@@ -164,7 +184,15 @@ const SummaryStep = ({ data, onPrev }: SummaryStepProps) => {
             <Calendar className="text-primary" size={20} />
             <h4 className="font-poppins font-bold text-gray-900 dark:text-white">Frequência</h4>
           </div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">{data.frequency} vezes por semana</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{getFrequencyLabel(data.frequency)}</p>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
+          <div className="flex items-center gap-3 mb-3">
+            <Clock className="text-primary" size={20} />
+            <h4 className="font-poppins font-bold text-gray-900 dark:text-white">Tempo por Treino</h4>
+          </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{getTimeFromFrequency(data.frequency)} minutos</p>
         </div>
 
         <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
