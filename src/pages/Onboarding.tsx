@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 export interface OnboardingData {
   name: string;
   age: string;
+  gender: string;
+  birthDate: Date | undefined;
   goal: string;
   experience: string;
   frequency: string;
@@ -33,6 +35,8 @@ const Onboarding = () => {
   const [data, setData] = useState<OnboardingData>({
     name: "",
     age: "",
+    gender: "",
+    birthDate: undefined,
     goal: "",
     experience: "",
     frequency: "",

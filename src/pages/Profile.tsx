@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { User, Save, LogOut, Shield, Edit3 } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format, differenceInYears } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { User, Save, LogOut, Shield, Edit3, ArrowLeft, Calendar as CalendarIcon, UserCheck } from "lucide-react";
 import Header from "@/components/Header";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -15,6 +18,9 @@ import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
 interface UserProfile {
+  nome_completo: string;
+  sexo: string;
+  data_nascimento: Date | null;
   objetivo: string;
   nivel_experiencia: string;
   frequencia_treino: string;
@@ -31,6 +37,9 @@ const Profile = () => {
   const navigate = useNavigate();
   
   const [profile, setProfile] = useState<UserProfile>({
+    nome_completo: "",
+    sexo: "",
+    data_nascimento: null,
     objetivo: "",
     nivel_experiencia: "",
     frequencia_treino: "",
@@ -43,6 +52,7 @@ const Profile = () => {
   
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -64,6 +74,9 @@ const Profile = () => {
 
       if (data) {
         setProfile({
+          nome_completo: data.nome_completo || "",
+          sexo: data.sexo || "",
+          data_nascimento: data.data_nascimento ? new Date(data.data_nascimento) : null,
           objetivo: data.objetivo || "",
           nivel_experiencia: data.nivel_experiencia || "",
           frequencia_treino: data.frequencia_treino || "",
@@ -92,6 +105,9 @@ const Profile = () => {
         .from('user_profiles')
         .upsert({
           user_id: user?.id,
+          nome_completo: profile.nome_completo,
+          sexo: profile.sexo,
+          data_nascimento: profile.data_nascimento?.toISOString().split('T')[0],
           objetivo: profile.objetivo,
           nivel_experiencia: profile.nivel_experiencia,
           frequencia_treino: profile.frequencia_treino,
@@ -138,6 +154,22 @@ const Profile = () => {
         description: "Ocorreu um erro ao fazer logout",
         variant: "destructive"
       });
+    }
+  };
+
+  const handleGoBack = () => {
+    window.history.length > 1 ? navigate(-1) : navigate("/dashboard");
+  };
+
+  const calculateAge = (birthDate: Date | null) => {
+    if (!birthDate) return "Não informado";
+    return `${differenceInYears(new Date(), birthDate)} anos`;
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      setProfile({...profile, data_nascimento: date});
+      setIsCalendarOpen(false);
     }
   };
 
@@ -192,7 +224,17 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
-      <Header />
+      <Header actions={
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleGoBack}
+          className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+        >
+          <ArrowLeft size={16} className="mr-2" />
+          Voltar
+        </Button>
+      } />
       
       <div className="max-w-4xl mx-auto p-4 pt-8">
         <div className="text-center mb-8">
@@ -222,13 +264,105 @@ const Profile = () => {
                     </p>
                   </div>
                 </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsEditing(!isEditing)}
+                  className="border-gray-300 dark:border-gray-600"
+                >
+                  <Edit3 size={16} className="mr-2" />
+                  {isEditing ? "Cancelar" : "Editar"}
+                </Button>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
+                    <Label className="text-gray-900 dark:text-white">Nome completo</Label>
+                    {isEditing ? (
+                      <Input
+                        value={profile.nome_completo}
+                        onChange={(e) => setProfile({...profile, nome_completo: e.target.value})}
+                        placeholder="Seu nome completo"
+                        className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                      />
+                    ) : (
+                      <Input 
+                        value={profile.nome_completo || "Não informado"} 
+                        disabled 
+                        className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+                      />
+                    )}
+                  </div>
+                  <div>
                     <Label className="text-gray-900 dark:text-white">Email</Label>
                     <Input 
                       value={user?.email || ""} 
+                      disabled 
+                      className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-gray-900 dark:text-white">Sexo</Label>
+                    {isEditing ? (
+                      <select
+                        value={profile.sexo}
+                        onChange={(e) => setProfile({...profile, sexo: e.target.value})}
+                        className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                      >
+                        <option value="">Selecione</option>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                      </select>
+                    ) : (
+                      <Input 
+                        value={profile.sexo ? (profile.sexo === 'masculino' ? 'Masculino' : 'Feminino') : "Não informado"} 
+                        disabled 
+                        className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+                      />
+                    )}
+                  </div>
+                  <div>
+                    <Label className="text-gray-900 dark:text-white">Data de nascimento</Label>
+                    {isEditing ? (
+                      <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full justify-start text-left font-normal bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
+                            {profile.data_nascimento ? (
+                              format(profile.data_nascimento, "dd/MM/yyyy", { locale: ptBR })
+                            ) : (
+                              <span className="text-gray-500 dark:text-gray-400">Selecione a data</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={profile.data_nascimento}
+                            onSelect={handleDateSelect}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                            locale={ptBR}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    ) : (
+                      <Input 
+                        value={profile.data_nascimento ? format(profile.data_nascimento, "dd/MM/yyyy", { locale: ptBR }) : "Não informado"} 
+                        disabled 
+                        className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+                      />
+                    )}
+                  </div>
+                  <div>
+                    <Label className="text-gray-900 dark:text-white">Idade</Label>
+                    <Input 
+                      value={calculateAge(profile.data_nascimento)} 
                       disabled 
                       className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                     />
@@ -242,6 +376,19 @@ const Profile = () => {
                     />
                   </div>
                 </div>
+
+                {isEditing && (
+                  <div className="flex gap-4 pt-4">
+                    <Button 
+                      onClick={handleSaveProfile}
+                      disabled={isLoading}
+                      className="bg-primary hover:bg-primary/90"
+                    >
+                      <Save size={16} className="mr-2" />
+                      {isLoading ? "Salvando..." : "Salvar Alterações"}
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
 

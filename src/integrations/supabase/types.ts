@@ -12,39 +12,51 @@ export type Database = {
       user_profiles: {
         Row: {
           created_at: string | null
+          data_nascimento: string | null
           data_onboarding: string | null
           frequencia_treino: string | null
           id: string
+          local_treino: string | null
           nivel_experiencia: string | null
+          nome_completo: string | null
           objetivo: string | null
           preferencias_treino: string | null
           restricoes: string | null
+          sexo: string | null
           tempo_disponivel: string | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
           created_at?: string | null
+          data_nascimento?: string | null
           data_onboarding?: string | null
           frequencia_treino?: string | null
           id?: string
+          local_treino?: string | null
           nivel_experiencia?: string | null
+          nome_completo?: string | null
           objetivo?: string | null
           preferencias_treino?: string | null
           restricoes?: string | null
+          sexo?: string | null
           tempo_disponivel?: string | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
           created_at?: string | null
+          data_nascimento?: string | null
           data_onboarding?: string | null
           frequencia_treino?: string | null
           id?: string
+          local_treino?: string | null
           nivel_experiencia?: string | null
+          nome_completo?: string | null
           objetivo?: string | null
           preferencias_treino?: string | null
           restricoes?: string | null
+          sexo?: string | null
           tempo_disponivel?: string | null
           updated_at?: string | null
           user_id?: string
