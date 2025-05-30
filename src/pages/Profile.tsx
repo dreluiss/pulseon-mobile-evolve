@@ -6,13 +6,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format, differenceInYears } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { User, Save, LogOut, Shield, Edit3, ArrowLeft, Calendar as CalendarIcon, UserCheck } from "lucide-react";
+import { User, Save, LogOut, Shield, Edit3, ArrowLeft } from "lucide-react";
 import Header from "@/components/Header";
+import AvatarUpload from "@/components/AvatarUpload";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserProfile } from "@/hooks/useUserProfile";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
@@ -33,69 +34,36 @@ interface UserProfile {
 
 const Profile = () => {
   const { user, signOut } = useAuth();
+  const { profile, setProfile, loading } = useUserProfile();
   const { toast } = useToast();
   const navigate = useNavigate();
   
-  const [profile, setProfile] = useState<UserProfile>({
-    nome_completo: "",
-    sexo: "",
-    data_nascimento: null,
-    objetivo: "",
-    nivel_experiencia: "",
-    frequencia_treino: "",
-    restricoes: "",
-    tempo_disponivel: "",
-    preferencias_treino: "",
-    local_treino: "",
-    data_onboarding: ""
-  });
-  
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
+  // Buscar avatar do usuário
   useEffect(() => {
-    if (user) {
-      fetchProfile();
-    }
+    const fetchAvatar = async () => {
+      if (!user) return;
+
+      try {
+        const { data } = await supabase
+          .from('user_avatars')
+          .select('avatar_url')
+          .eq('user_id', user.id)
+          .single();
+
+        if (data?.avatar_url) {
+          setAvatarUrl(data.avatar_url);
+        }
+      } catch (error) {
+        console.log('Nenhum avatar encontrado');
+      }
+    };
+
+    fetchAvatar();
   }, [user]);
-
-  const fetchProfile = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('user_id', user?.id)
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        throw error;
-      }
-
-      if (data) {
-        setProfile({
-          nome_completo: data.nome_completo || "",
-          sexo: data.sexo || "",
-          data_nascimento: data.data_nascimento ? new Date(data.data_nascimento) : null,
-          objetivo: data.objetivo || "",
-          nivel_experiencia: data.nivel_experiencia || "",
-          frequencia_treino: data.frequencia_treino || "",
-          restricoes: data.restricoes || "",
-          tempo_disponivel: data.tempo_disponivel || "",
-          preferencias_treino: data.preferencias_treino || "",
-          local_treino: (data as any).local_treino || "",
-          data_onboarding: data.data_onboarding || ""
-        });
-      }
-    } catch (error: any) {
-      console.error('Erro ao buscar perfil:', error);
-      toast({
-        title: "Erro ao carregar perfil",
-        description: "Não foi possível carregar as informações do perfil",
-        variant: "destructive"
-      });
-    }
-  };
 
   const handleSaveProfile = async () => {
     setIsLoading(true);
@@ -166,11 +134,14 @@ const Profile = () => {
     return `${differenceInYears(new Date(), birthDate)} anos`;
   };
 
-  const handleDateSelect = (date: Date | undefined) => {
-    if (date) {
-      setProfile({...profile, data_nascimento: date});
-      setIsCalendarOpen(false);
-    }
+  const handleDateChange = (type: 'year' | 'month' | 'day', value: string) => {
+    const currentDate = profile.data_nascimento || new Date();
+    const year = type === 'year' ? parseInt(value) : currentDate.getFullYear();
+    const month = type === 'month' ? parseInt(value) : currentDate.getMonth();
+    const day = type === 'day' ? parseInt(value) : currentDate.getDate();
+    
+    const newDate = new Date(year, month, day);
+    setProfile({...profile, data_nascimento: newDate});
   };
 
   const getGoalLabel = (goal: string) => {
@@ -221,6 +192,36 @@ const Profile = () => {
     };
     return locations[location] || location;
   };
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
+  const months = [
+    { value: 0, label: "Janeiro" }, { value: 1, label: "Fevereiro" }, { value: 2, label: "Março" },
+    { value: 3, label: "Abril" }, { value: 4, label: "Maio" }, { value: 5, label: "Junho" },
+    { value: 6, label: "Julho" }, { value: 7, label: "Agosto" }, { value: 8, label: "Setembro" },
+    { value: 9, label: "Outubro" }, { value: 10, label: "Novembro" }, { value: 11, label: "Dezembro" }
+  ];
+
+  const getDaysInMonth = (year: number, month: number) => {
+    return new Date(year, month + 1, 0).getDate();
+  };
+
+  const selectedYear = profile.data_nascimento?.getFullYear() || currentYear - 25;
+  const selectedMonth = profile.data_nascimento?.getMonth() || 0;
+  const selectedDay = profile.data_nascimento?.getDate() || 1;
+  const daysInMonth = getDaysInMonth(selectedYear, selectedMonth);
+  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Carregando...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
@@ -274,7 +275,16 @@ const Profile = () => {
                   {isEditing ? "Cancelar" : "Editar"}
                 </Button>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
+                <div className="flex justify-center">
+                  <AvatarUpload
+                    currentAvatarUrl={avatarUrl}
+                    onAvatarUpdate={setAvatarUrl}
+                    isEditing={isEditing}
+                    userName={profile.nome_completo}
+                  />
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label className="text-gray-900 dark:text-white">Nome completo</Label>
@@ -304,15 +314,15 @@ const Profile = () => {
                   <div>
                     <Label className="text-gray-900 dark:text-white">Sexo</Label>
                     {isEditing ? (
-                      <select
-                        value={profile.sexo}
-                        onChange={(e) => setProfile({...profile, sexo: e.target.value})}
-                        className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                      >
-                        <option value="">Selecione</option>
-                        <option value="masculino">Masculino</option>
-                        <option value="feminino">Feminino</option>
-                      </select>
+                      <Select value={profile.sexo} onValueChange={(value) => setProfile({...profile, sexo: value})}>
+                        <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+                          <SelectValue placeholder="Selecione" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="masculino">Masculino</SelectItem>
+                          <SelectItem value="feminino">Feminino</SelectItem>
+                        </SelectContent>
+                      </Select>
                     ) : (
                       <Input 
                         value={profile.sexo ? (profile.sexo === 'masculino' ? 'Masculino' : 'Feminino') : "Não informado"} 
@@ -324,33 +334,38 @@ const Profile = () => {
                   <div>
                     <Label className="text-gray-900 dark:text-white">Data de nascimento</Label>
                     {isEditing ? (
-                      <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            className="w-full justify-start text-left font-normal bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
-                          >
-                            <CalendarIcon className="mr-2 h-4 w-4 text-gray-500 dark:text-gray-400" />
-                            {profile.data_nascimento ? (
-                              format(profile.data_nascimento, "dd/MM/yyyy", { locale: ptBR })
-                            ) : (
-                              <span className="text-gray-500 dark:text-gray-400">Selecione a data</span>
-                            )}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={profile.data_nascimento}
-                            onSelect={handleDateSelect}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                            locale={ptBR}
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <div className="grid grid-cols-3 gap-2">
+                        <Select value={selectedDay.toString()} onValueChange={(value) => handleDateChange('day', value)}>
+                          <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {days.map((day) => (
+                              <SelectItem key={day} value={day.toString()}>{day}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <Select value={selectedMonth.toString()} onValueChange={(value) => handleDateChange('month', value)}>
+                          <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {months.map((month) => (
+                              <SelectItem key={month.value} value={month.value.toString()}>{month.label}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <Select value={selectedYear.toString()} onValueChange={(value) => handleDateChange('year', value)}>
+                          <SelectTrigger className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="max-h-48">
+                            {years.map((year) => (
+                              <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                     ) : (
                       <Input 
                         value={profile.data_nascimento ? format(profile.data_nascimento, "dd/MM/yyyy", { locale: ptBR }) : "Não informado"} 
