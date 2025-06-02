@@ -12,9 +12,11 @@ const Dashboard = () => {
   const { firstName, loading: nameLoading } = useUserName();
   const { nextWorkout, stats, loading: workoutsLoading, workouts } = useUserWorkouts();
 
+  console.log('Dashboard - user:', user?.email);
+  console.log('Dashboard - firstName:', firstName);
   console.log('Dashboard - workouts:', workouts);
   console.log('Dashboard - nextWorkout:', nextWorkout);
-  console.log('Dashboard - loading:', workoutsLoading);
+  console.log('Dashboard - loading states:', { nameLoading, workoutsLoading });
 
   const handleStartWorkout = () => {
     console.log('Iniciando treino:', nextWorkout?.name);
@@ -27,7 +29,7 @@ const Dashboard = () => {
       <div className="max-w-7xl mx-auto p-4 pt-8">
         <div className="mb-8">
           <h1 className="text-3xl font-inter font-bold text-gray-900 dark:text-white mb-2">
-            {nameLoading ? "Bem-vindo de volta!" : `Bem-vindo de volta, ${firstName}!`}
+            {nameLoading ? "Bem-vindo!" : `Bem-vindo, ${firstName}!`}
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             Aqui está um resumo do seu progresso e próximos treinos
@@ -151,7 +153,7 @@ const Dashboard = () => {
                 </div>
               ) : (
                 <div className="text-center text-gray-500 dark:text-gray-400">
-                  {workouts.length === 0 ? "Criando treinos..." : "Nenhum treino agendado"}
+                  {workouts.length === 0 ? "Criando treinos de exemplo..." : "Nenhum treino agendado"}
                 </div>
               )}
             </CardContent>

@@ -201,6 +201,7 @@ export const useUserWorkouts = () => {
 
     try {
       console.log('Buscando treinos para o usuário:', user.id);
+      setLoading(true);
 
       // Buscar treinos do usuário
       const { data: workoutsData, error: workoutsError } = await supabase
@@ -216,6 +217,7 @@ export const useUserWorkouts = () => {
         .order('scheduled_date', { ascending: true });
 
       console.log('Treinos encontrados:', workoutsData?.length || 0);
+      console.log('Dados dos treinos:', workoutsData);
 
       if (workoutsError) {
         console.error('Erro na busca de treinos:', workoutsError);
@@ -243,7 +245,9 @@ export const useUserWorkouts = () => {
           
           if (newError) {
             console.error('Erro ao buscar treinos após criação:', newError);
-          } else if (newWorkoutsData) {
+          } else if (newWorkoutsData && newWorkoutsData.length > 0) {
+            console.log('Novos treinos criados:', newWorkoutsData.length);
+            
             const formattedWorkouts = newWorkoutsData.map(workout => ({
               ...workout,
               exercises: workout.workout_exercises?.map(we => ({
@@ -258,7 +262,7 @@ export const useUserWorkouts = () => {
 
             setWorkouts(formattedWorkouts);
             const upcoming = formattedWorkouts.find(w => !w.completed);
-            setNextWorkout(upcoming || null);
+            setNextWorkout(upcoming || formattedWorkouts[0] || null);
 
             const completed = formattedWorkouts.filter(w => w.completed).length;
             setStats(prev => ({
@@ -269,6 +273,8 @@ export const useUserWorkouts = () => {
           }
         }
       } else {
+        console.log('Processando treinos existentes:', workoutsData.length);
+        
         const formattedWorkouts = workoutsData.map(workout => ({
           ...workout,
           exercises: workout.workout_exercises?.map(we => ({
@@ -283,7 +289,7 @@ export const useUserWorkouts = () => {
 
         setWorkouts(formattedWorkouts);
         const upcoming = formattedWorkouts.find(w => !w.completed);
-        setNextWorkout(upcoming || null);
+        setNextWorkout(upcoming || formattedWorkouts[0] || null);
 
         const completed = formattedWorkouts.filter(w => w.completed).length;
         setStats(prev => ({
@@ -302,7 +308,11 @@ export const useUserWorkouts = () => {
 
   useEffect(() => {
     if (user) {
+      console.log('User authenticated, fetching workouts for:', user.id);
       fetchWorkouts();
+    } else {
+      console.log('No user authenticated');
+      setLoading(false);
     }
   }, [user]);
 

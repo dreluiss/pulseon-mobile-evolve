@@ -16,25 +16,32 @@ export const useUserName = () => {
       }
 
       try {
+        console.log('Fetching user name for:', user.id);
+        
         const { data, error } = await supabase
           .from('user_profiles')
           .select('nome_completo')
           .eq('user_id', user.id)
           .single();
 
-        if (data?.nome_completo) {
+        console.log('User name data:', data);
+        console.log('User name error:', error);
+
+        if (data?.nome_completo && data.nome_completo.trim() !== '') {
           // Extrair o primeiro nome
-          const name = data.nome_completo.split(' ')[0];
+          const name = data.nome_completo.trim().split(' ')[0];
           setFirstName(name);
+          console.log('Using name from profile:', name);
         } else {
           // Fallback para o email se não tiver nome
-          const emailPrefix = user.email?.split('@')[0] || '';
+          const emailPrefix = user.email?.split('@')[0] || 'usuário';
           setFirstName(emailPrefix);
+          console.log('Using email prefix as fallback:', emailPrefix);
         }
       } catch (error) {
         console.error('Erro ao buscar nome do usuário:', error);
         // Fallback para o email
-        const emailPrefix = user.email?.split('@')[0] || '';
+        const emailPrefix = user.email?.split('@')[0] || 'usuário';
         setFirstName(emailPrefix);
       } finally {
         setLoading(false);

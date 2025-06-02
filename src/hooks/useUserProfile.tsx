@@ -43,6 +43,7 @@ export const useUserProfile = () => {
     }
 
     console.log('Fetching profile for user:', user.id);
+    setLoading(true);
 
     try {
       // Buscar dados do perfil do usuário
@@ -55,27 +56,27 @@ export const useUserProfile = () => {
       console.log('Profile data from database:', data);
       console.log('Profile fetch error:', error);
 
-      // Sempre incluir o email do usuário autenticado
-      const profileData = {
-        email: user.email || "",
-        nome_completo: data?.nome_completo || "",
-        sexo: data?.sexo || "",
-        data_nascimento: data?.data_nascimento ? new Date(data.data_nascimento) : null,
-        objetivo: data?.objetivo || "",
-        nivel_experiencia: data?.nivel_experiencia || "",
-        frequencia_treino: data?.frequencia_treino || "",
-        restricoes: data?.restricoes || "",
-        tempo_disponivel: data?.tempo_disponivel || "",
-        preferencias_treino: data?.preferencias_treino || "",
-        local_treino: data?.local_treino || "",
-        data_onboarding: data?.data_onboarding || ""
-      };
+      if (data) {
+        // Se encontrou dados, usar eles
+        const profileData = {
+          email: user.email || "",
+          nome_completo: data.nome_completo || "",
+          sexo: data.sexo || "",
+          data_nascimento: data.data_nascimento ? new Date(data.data_nascimento) : null,
+          objetivo: data.objetivo || "",
+          nivel_experiencia: data.nivel_experiencia || "",
+          frequencia_treino: data.frequencia_treino || "",
+          restricoes: data.restricoes || "",
+          tempo_disponivel: data.tempo_disponivel || "",
+          preferencias_treino: data.preferencias_treino || "",
+          local_treino: data.local_treino || "",
+          data_onboarding: data.data_onboarding || ""
+        };
 
-      console.log('Processed profile data:', profileData);
-      setProfile(profileData);
-
-      // Se não existe perfil, criar um básico
-      if (error && error.code === 'PGRST116') {
+        console.log('Processed profile data:', profileData);
+        setProfile(profileData);
+      } else if (error && error.code === 'PGRST116') {
+        // Se não existe perfil, criar um básico
         console.log('Creating basic profile for user');
         const basicProfile = {
           user_id: user.id,
@@ -98,6 +99,12 @@ export const useUserProfile = () => {
 
         if (insertError) {
           console.error('Error creating basic profile:', insertError);
+        } else {
+          // Definir perfil básico com email
+          setProfile(prev => ({
+            ...prev,
+            email: user.email || ""
+          }));
         }
       }
     } catch (error: any) {
@@ -115,6 +122,8 @@ export const useUserProfile = () => {
   useEffect(() => {
     if (user) {
       fetchProfile();
+    } else {
+      setLoading(false);
     }
   }, [user]);
 
