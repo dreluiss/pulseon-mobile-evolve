@@ -55,10 +55,6 @@ export const useUserProfile = () => {
       console.log('Profile data from database:', data);
       console.log('Profile fetch error:', error);
 
-      if (error && error.code !== 'PGRST116') {
-        throw error;
-      }
-
       // Sempre incluir o email do usuário autenticado
       const profileData = {
         email: user.email || "",
@@ -77,6 +73,33 @@ export const useUserProfile = () => {
 
       console.log('Processed profile data:', profileData);
       setProfile(profileData);
+
+      // Se não existe perfil, criar um básico
+      if (error && error.code === 'PGRST116') {
+        console.log('Creating basic profile for user');
+        const basicProfile = {
+          user_id: user.id,
+          nome_completo: "",
+          sexo: "",
+          data_nascimento: null,
+          objetivo: "",
+          nivel_experiencia: "",
+          frequencia_treino: "",
+          restricoes: "",
+          tempo_disponivel: "",
+          preferencias_treino: "",
+          local_treino: "",
+          data_onboarding: new Date().toISOString()
+        };
+
+        const { error: insertError } = await supabase
+          .from('user_profiles')
+          .insert(basicProfile);
+
+        if (insertError) {
+          console.error('Error creating basic profile:', insertError);
+        }
+      }
     } catch (error: any) {
       console.error('Erro ao buscar perfil:', error);
       // Em caso de erro, pelo menos definir o email
@@ -90,7 +113,9 @@ export const useUserProfile = () => {
   };
 
   useEffect(() => {
-    fetchProfile();
+    if (user) {
+      fetchProfile();
+    }
   }, [user]);
 
   return { profile, setProfile, loading, refetchProfile: fetchProfile };

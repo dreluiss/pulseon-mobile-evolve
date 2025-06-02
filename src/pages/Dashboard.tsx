@@ -10,10 +10,13 @@ import { Activity, Target, Calendar, TrendingUp } from "lucide-react";
 const Dashboard = () => {
   const { user } = useAuth();
   const { firstName, loading: nameLoading } = useUserName();
-  const { nextWorkout, stats, loading: workoutsLoading } = useUserWorkouts();
+  const { nextWorkout, stats, loading: workoutsLoading, workouts } = useUserWorkouts();
+
+  console.log('Dashboard - workouts:', workouts);
+  console.log('Dashboard - nextWorkout:', nextWorkout);
+  console.log('Dashboard - loading:', workoutsLoading);
 
   const handleStartWorkout = () => {
-    // Futuramente será implementado para iniciar o treino
     console.log('Iniciando treino:', nextWorkout?.name);
   };
 
@@ -136,14 +139,19 @@ const Dashboard = () => {
                   <div className="text-sm text-gray-600 dark:text-gray-400">
                     <p>Duração estimada: {nextWorkout.estimated_duration || 45} minutos</p>
                     <p>
-                      {nextWorkout.exercises?.length || 8} exercícios • 
-                      Nível {nextWorkout.difficulty_level === 'intermediate' ? 'intermediário' : nextWorkout.difficulty_level}
+                      {nextWorkout.exercises?.length || 4} exercícios • 
+                      Nível {nextWorkout.difficulty_level === 'intermediate' ? 'intermediário' : 
+                             nextWorkout.difficulty_level === 'beginner' ? 'iniciante' : 
+                             nextWorkout.difficulty_level || 'intermediário'}
                     </p>
+                    {nextWorkout.description && (
+                      <p className="mt-2 text-xs">{nextWorkout.description}</p>
+                    )}
                   </div>
                 </div>
               ) : (
                 <div className="text-center text-gray-500 dark:text-gray-400">
-                  Nenhum treino agendado
+                  {workouts.length === 0 ? "Criando treinos..." : "Nenhum treino agendado"}
                 </div>
               )}
             </CardContent>
@@ -157,19 +165,27 @@ const Dashboard = () => {
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600 dark:text-gray-400">Tempo médio de treino</span>
-                  <span className="font-medium text-gray-900 dark:text-white">42 min</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {nextWorkout?.estimated_duration || 45} min
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Treinos disponíveis</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {workoutsLoading ? "..." : workouts.length}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600 dark:text-gray-400">Treinos esta semana</span>
-                  <span className="font-medium text-gray-900 dark:text-white">4 de 5</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {stats.completedWorkouts} de {workouts.length}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Calorias queimadas</span>
-                  <span className="font-medium text-gray-900 dark:text-white">1,240 kcal</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Exercícios favoritos</span>
-                  <span className="font-medium text-gray-900 dark:text-white">Supino, Agachamento</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Próximo treino</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {nextWorkout?.workout_type || "Força"}
+                  </span>
                 </div>
               </div>
             </CardContent>

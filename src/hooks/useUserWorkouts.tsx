@@ -43,12 +43,61 @@ export const useUserWorkouts = () => {
   });
 
   const createSampleWorkouts = async () => {
-    if (!user) return;
+    if (!user) return false;
 
     try {
       console.log('Criando treinos de exemplo para o usuário:', user.id);
       
+      // Criar exercícios básicos primeiro se não existirem
+      const { data: existingExercises } = await supabase
+        .from('exercises')
+        .select('*')
+        .limit(1);
+
+      if (!existingExercises || existingExercises.length === 0) {
+        console.log('Criando exercícios básicos...');
+        const basicExercises = [
+          {
+            name: 'Flexão de Braço',
+            description: 'Exercício básico para peitoral',
+            muscle_groups: ['peitoral', 'tríceps'],
+            equipment: ['peso corporal'],
+            difficulty_level: 'beginner'
+          },
+          {
+            name: 'Agachamento',
+            description: 'Exercício para pernas',
+            muscle_groups: ['quadríceps', 'glúteos'],
+            equipment: ['peso corporal'],
+            difficulty_level: 'beginner'
+          },
+          {
+            name: 'Prancha',
+            description: 'Exercício para core',
+            muscle_groups: ['abdômen'],
+            equipment: ['peso corporal'],
+            difficulty_level: 'beginner'
+          },
+          {
+            name: 'Burpee',
+            description: 'Exercício funcional completo',
+            muscle_groups: ['corpo todo'],
+            equipment: ['peso corporal'],
+            difficulty_level: 'intermediate'
+          }
+        ];
+
+        await supabase.from('exercises').insert(basicExercises);
+      }
+
+      // Buscar exercícios para usar nos treinos
+      const { data: exercises } = await supabase
+        .from('exercises')
+        .select('*')
+        .limit(8);
+
       // Criar treinos de exemplo
+      const today = new Date();
       const sampleWorkouts = [
         {
           user_id: user.id,
@@ -57,7 +106,7 @@ export const useUserWorkouts = () => {
           estimated_duration: 45,
           difficulty_level: 'intermediate',
           workout_type: 'Força',
-          scheduled_date: new Date().toISOString(),
+          scheduled_date: today.toISOString(),
           completed: false
         },
         {
@@ -82,7 +131,7 @@ export const useUserWorkouts = () => {
         },
         {
           user_id: user.id,
-          name: 'Treino Completo',
+          name: 'Treino Funcional',
           description: 'Treino funcional para corpo todo',
           estimated_duration: 40,
           difficulty_level: 'beginner',
@@ -92,74 +141,48 @@ export const useUserWorkouts = () => {
         }
       ];
 
-      const { data: createdWorkouts, error } = await supabase
+      const { data: createdWorkouts, error: workoutError } = await supabase
         .from('user_workouts')
         .insert(sampleWorkouts)
         .select();
 
-      console.log('Treinos criados:', createdWorkouts);
-      console.log('Erro na criação:', error);
+      if (workoutError) {
+        console.error('Erro ao criar treinos:', workoutError);
+        return false;
+      }
 
-      if (error) throw error;
+      console.log('Treinos criados:', createdWorkouts?.length);
 
-      // Buscar exercícios existentes para adicionar aos treinos
-      const { data: exercises } = await supabase
-        .from('exercises')
-        .select('*')
-        .limit(12);
-
-      if (exercises && createdWorkouts) {
-        console.log('Exercícios encontrados:', exercises.length);
-        
-        // Adicionar exercícios aos treinos criados
+      // Adicionar exercícios aos treinos se temos exercícios disponíveis
+      if (exercises && exercises.length > 0 && createdWorkouts) {
         const workoutExercises = [];
         
-        // Primeiro treino - 4 exercícios
-        for (let i = 0; i < Math.min(4, exercises.length); i++) {
-          workoutExercises.push({
-            workout_id: createdWorkouts[0].id,
-            exercise_id: exercises[i].id,
-            sets: 3,
-            reps: '8-12',
-            order_position: i + 1,
-            rest_seconds: 60
-          });
-        }
-        
-        // Segundo treino - 4 exercícios
-        for (let i = 4; i < Math.min(8, exercises.length); i++) {
-          workoutExercises.push({
-            workout_id: createdWorkouts[1].id,
-            exercise_id: exercises[i].id,
-            sets: 3,
-            reps: '10-15',
-            order_position: i - 3,
-            rest_seconds: 60
-          });
-        }
+        createdWorkouts.forEach((workout, workoutIndex) => {
+          // Adicionar 3-4 exercícios por treino
+          const exercisesPerWorkout = 3;
+          for (let i = 0; i < exercisesPerWorkout && i < exercises.length; i++) {
+            const exerciseIndex = (workoutIndex * exercisesPerWorkout + i) % exercises.length;
+            workoutExercises.push({
+              workout_id: workout.id,
+              exercise_id: exercises[exerciseIndex].id,
+              sets: 3,
+              reps: '8-12',
+              order_position: i + 1,
+              rest_seconds: 60
+            });
+          }
+        });
 
-        // Terceiro treino - 4 exercícios
-        for (let i = 8; i < Math.min(12, exercises.length); i++) {
-          workoutExercises.push({
-            workout_id: createdWorkouts[2].id,
-            exercise_id: exercises[i].id,
-            sets: 4,
-            reps: '12-15',
-            order_position: i - 7,
-            rest_seconds: 90
-          });
-        }
+        if (workoutExercises.length > 0) {
+          const { error: exerciseError } = await supabase
+            .from('workout_exercises')
+            .insert(workoutExercises);
 
-        console.log('Inserindo exercícios nos treinos:', workoutExercises.length);
-
-        const { error: exerciseError } = await supabase
-          .from('workout_exercises')
-          .insert(workoutExercises);
-
-        if (exerciseError) {
-          console.error('Erro ao inserir exercícios:', exerciseError);
-        } else {
-          console.log('Exercícios inseridos com sucesso');
+          if (exerciseError) {
+            console.error('Erro ao inserir exercícios nos treinos:', exerciseError);
+          } else {
+            console.log('Exercícios inseridos nos treinos com sucesso');
+          }
         }
       }
 
@@ -193,17 +216,20 @@ export const useUserWorkouts = () => {
         .order('scheduled_date', { ascending: true });
 
       console.log('Treinos encontrados:', workoutsData?.length || 0);
-      console.log('Erro na busca:', workoutsError);
 
-      if (workoutsError) throw workoutsError;
+      if (workoutsError) {
+        console.error('Erro na busca de treinos:', workoutsError);
+        throw workoutsError;
+      }
 
       // Se não tem treinos, criar alguns de exemplo
       if (!workoutsData || workoutsData.length === 0) {
         console.log('Nenhum treino encontrado, criando exemplos...');
         const created = await createSampleWorkouts();
+        
         if (created) {
           // Buscar novamente após criar
-          const { data: newWorkoutsData } = await supabase
+          const { data: newWorkoutsData, error: newError } = await supabase
             .from('user_workouts')
             .select(`
               *,
@@ -215,7 +241,9 @@ export const useUserWorkouts = () => {
             .eq('user_id', user.id)
             .order('scheduled_date', { ascending: true });
           
-          if (newWorkoutsData) {
+          if (newError) {
+            console.error('Erro ao buscar treinos após criação:', newError);
+          } else if (newWorkoutsData) {
             const formattedWorkouts = newWorkoutsData.map(workout => ({
               ...workout,
               exercises: workout.workout_exercises?.map(we => ({
@@ -229,12 +257,9 @@ export const useUserWorkouts = () => {
             }));
 
             setWorkouts(formattedWorkouts);
-
-            // Encontrar próximo treino não completado
             const upcoming = formattedWorkouts.find(w => !w.completed);
             setNextWorkout(upcoming || null);
 
-            // Calcular estatísticas
             const completed = formattedWorkouts.filter(w => w.completed).length;
             setStats(prev => ({
               ...prev,
@@ -257,12 +282,9 @@ export const useUserWorkouts = () => {
         }));
 
         setWorkouts(formattedWorkouts);
-
-        // Encontrar próximo treino não completado
         const upcoming = formattedWorkouts.find(w => !w.completed);
         setNextWorkout(upcoming || null);
 
-        // Calcular estatísticas
         const completed = formattedWorkouts.filter(w => w.completed).length;
         setStats(prev => ({
           ...prev,
