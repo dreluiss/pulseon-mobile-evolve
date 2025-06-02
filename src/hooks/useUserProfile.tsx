@@ -42,6 +42,8 @@ export const useUserProfile = () => {
       return;
     }
 
+    console.log('Fetching profile for user:', user.id);
+
     try {
       // Buscar dados do perfil do usuário
       const { data, error } = await supabase
@@ -49,6 +51,9 @@ export const useUserProfile = () => {
         .select('*')
         .eq('user_id', user.id)
         .single();
+
+      console.log('Profile data from database:', data);
+      console.log('Profile fetch error:', error);
 
       if (error && error.code !== 'PGRST116') {
         throw error;
@@ -70,6 +75,7 @@ export const useUserProfile = () => {
         data_onboarding: data?.data_onboarding || ""
       };
 
+      console.log('Processed profile data:', profileData);
       setProfile(profileData);
     } catch (error: any) {
       console.error('Erro ao buscar perfil:', error);

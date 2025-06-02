@@ -18,29 +18,18 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
-interface UserProfile {
-  nome_completo: string;
-  sexo: string;
-  data_nascimento: Date | null;
-  objetivo: string;
-  nivel_experiencia: string;
-  frequencia_treino: string;
-  restricoes: string;
-  tempo_disponivel: string;
-  preferencias_treino: string;
-  local_treino: string;
-  data_onboarding: string;
-}
-
 const Profile = () => {
   const { user, signOut } = useAuth();
-  const { profile, setProfile, loading } = useUserProfile();
+  const { profile, setProfile, loading, refetchProfile } = useUserProfile();
   const { toast } = useToast();
   const navigate = useNavigate();
   
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  console.log('Profile data in component:', profile);
+  console.log('User data:', user);
 
   // Buscar avatar do usuário
   useEffect(() => {
@@ -65,31 +54,45 @@ const Profile = () => {
     fetchAvatar();
   }, [user]);
 
+  // Recarregar perfil quando o componente for montado
+  useEffect(() => {
+    if (user) {
+      refetchProfile();
+    }
+  }, [user, refetchProfile]);
+
   const handleSaveProfile = async () => {
     setIsLoading(true);
     
     try {
+      const profileData = {
+        user_id: user?.id,
+        nome_completo: profile.nome_completo,
+        sexo: profile.sexo,
+        data_nascimento: profile.data_nascimento?.toISOString().split('T')[0],
+        objetivo: profile.objetivo,
+        nivel_experiencia: profile.nivel_experiencia,
+        frequencia_treino: profile.frequencia_treino,
+        restricoes: profile.restricoes,
+        tempo_disponivel: profile.tempo_disponivel,
+        preferencias_treino: profile.preferencias_treino,
+        local_treino: profile.local_treino,
+        data_onboarding: profile.data_onboarding || new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+
+      console.log('Saving profile data:', profileData);
+
       const { error } = await supabase
         .from('user_profiles')
-        .upsert({
-          user_id: user?.id,
-          nome_completo: profile.nome_completo,
-          sexo: profile.sexo,
-          data_nascimento: profile.data_nascimento?.toISOString().split('T')[0],
-          objetivo: profile.objetivo,
-          nivel_experiencia: profile.nivel_experiencia,
-          frequencia_treino: profile.frequencia_treino,
-          restricoes: profile.restricoes,
-          tempo_disponivel: profile.tempo_disponivel,
-          preferencias_treino: profile.preferencias_treino,
-          local_treino: profile.local_treino,
-          data_onboarding: profile.data_onboarding || new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        } as any, {
+        .upsert(profileData, {
           onConflict: 'user_id'
         });
 
       if (error) throw error;
+
+      // Recarregar o perfil após salvar
+      await refetchProfile();
 
       toast({
         title: "Perfil atualizado!",
@@ -131,7 +134,13 @@ const Profile = () => {
 
   const calculateAge = (birthDate: Date | null) => {
     if (!birthDate) return "Não informado";
-    return `${differenceInYears(new Date(), birthDate)} anos`;
+    try {
+      const age = differenceInYears(new Date(), birthDate);
+      return `${age} anos`;
+    } catch (error) {
+      console.error('Erro ao calcular idade:', error);
+      return "Erro no cálculo";
+    }
   };
 
   const handleDateChange = (type: 'year' | 'month' | 'day', value: string) => {
@@ -306,7 +315,7 @@ const Profile = () => {
                   <div>
                     <Label className="text-gray-900 dark:text-white">Email</Label>
                     <Input 
-                      value={user?.email || ""} 
+                      value={profile.email || user?.email || ""} 
                       disabled 
                       className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
                     />
