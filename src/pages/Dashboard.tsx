@@ -1,6 +1,7 @@
 
 import { useAuth } from "@/hooks/useAuth";
 import { useUserName } from "@/hooks/useUserName";
+import { useUserWorkouts } from "@/hooks/useUserWorkouts";
 import Header from "@/components/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,13 @@ import { Activity, Target, Calendar, TrendingUp } from "lucide-react";
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const { firstName, loading } = useUserName();
+  const { firstName, loading: nameLoading } = useUserName();
+  const { nextWorkout, stats, loading: workoutsLoading } = useUserWorkouts();
+
+  const handleStartWorkout = () => {
+    // Futuramente será implementado para iniciar o treino
+    console.log('Iniciando treino:', nextWorkout?.name);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
@@ -17,7 +24,7 @@ const Dashboard = () => {
       <div className="max-w-7xl mx-auto p-4 pt-8">
         <div className="mb-8">
           <h1 className="text-3xl font-inter font-bold text-gray-900 dark:text-white mb-2">
-            {loading ? "Bem-vindo de volta!" : `Bem-vindo de volta, ${firstName}!`}
+            {nameLoading ? "Bem-vindo de volta!" : `Bem-vindo de volta, ${firstName}!`}
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             Aqui está um resumo do seu progresso e próximos treinos
@@ -33,7 +40,9 @@ const Dashboard = () => {
               <Activity className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">12</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                {workoutsLoading ? "..." : stats.completedWorkouts}
+              </div>
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 +2 desde a semana passada
               </p>
@@ -48,7 +57,9 @@ const Dashboard = () => {
               <Target className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">8</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                {workoutsLoading ? "..." : stats.goalsAchieved}
+              </div>
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 67% das metas semanais
               </p>
@@ -63,7 +74,9 @@ const Dashboard = () => {
               <Calendar className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">5 dias</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                {workoutsLoading ? "..." : `${stats.currentStreak} dias`}
+              </div>
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 Continue assim!
               </p>
@@ -78,7 +91,9 @@ const Dashboard = () => {
               <TrendingUp className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">85%</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                {workoutsLoading ? "..." : `${stats.weeklyProgress}%`}
+              </div>
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 +12% desde a semana passada
               </p>
@@ -92,21 +107,45 @@ const Dashboard = () => {
               <CardTitle className="text-gray-900 dark:text-white">Próximo Treino</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium text-gray-900 dark:text-white">Treino de Peito e Tríceps</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Hoje, 18:00</p>
+              {workoutsLoading ? (
+                <div className="text-center text-gray-500 dark:text-gray-400">
+                  Carregando treinos...
+                </div>
+              ) : nextWorkout ? (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-medium text-gray-900 dark:text-white">
+                        {nextWorkout.name}
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        {nextWorkout.scheduled_date 
+                          ? new Date(nextWorkout.scheduled_date).toLocaleDateString('pt-BR')
+                          : 'Hoje'
+                        }
+                      </p>
+                    </div>
+                    <Button 
+                      size="sm" 
+                      className="bg-primary hover:bg-primary/90"
+                      onClick={handleStartWorkout}
+                    >
+                      Iniciar
+                    </Button>
                   </div>
-                  <Button size="sm" className="bg-primary hover:bg-primary/90">
-                    Iniciar
-                  </Button>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    <p>Duração estimada: {nextWorkout.estimated_duration || 45} minutos</p>
+                    <p>
+                      {nextWorkout.exercises?.length || 8} exercícios • 
+                      Nível {nextWorkout.difficulty_level === 'intermediate' ? 'intermediário' : nextWorkout.difficulty_level}
+                    </p>
+                  </div>
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
-                  <p>Duração estimada: 45 minutos</p>
-                  <p>8 exercícios • Nível intermediário</p>
+              ) : (
+                <div className="text-center text-gray-500 dark:text-gray-400">
+                  Nenhum treino agendado
                 </div>
-              </div>
+              )}
             </CardContent>
           </Card>
 
