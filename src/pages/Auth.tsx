@@ -1,6 +1,5 @@
-
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +10,9 @@ import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const Auth = () => {
-  const [mode, setMode] = useState<'signup' | 'login' | 'reset'>('signup');
+  const [searchParams] = useSearchParams();
+  const initialMode = searchParams.get('mode') as 'signup' | 'login' | 'reset' || 'signup';
+  const [mode, setMode] = useState<'signup' | 'login' | 'reset'>(initialMode);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -22,6 +23,13 @@ const Auth = () => {
   const { signUp, signIn, resetPassword } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const urlMode = searchParams.get('mode') as 'signup' | 'login' | 'reset';
+    if (urlMode && ['signup', 'login', 'reset'].includes(urlMode)) {
+      setMode(urlMode);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,8 +74,9 @@ const Auth = () => {
         } else {
           toast({
             title: "Cadastro realizado!",
-            description: "Verifique seu email para confirmar a conta antes de fazer login."
+            description: "Você pode fazer login agora mesmo. O email de verificação é opcional."
           });
+          setMode('login');
         }
       } else if (mode === 'login') {
         const { error } = await signIn(email, password);
@@ -83,6 +92,7 @@ const Auth = () => {
             title: "Login realizado!",
             description: "Bem-vindo de volta!"
           });
+          navigate("/dashboard");
         }
       } else if (mode === 'reset') {
         const { error } = await resetPassword(email);
